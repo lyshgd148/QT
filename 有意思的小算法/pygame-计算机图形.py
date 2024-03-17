@@ -1,7 +1,6 @@
-import time
-
 import pygame
 from pygame.locals import *
+
 
 pygame.init()
 width, height = 600, 600
@@ -33,8 +32,12 @@ def line(screen, list_start_end):
             for i in range(0, x_e - x - 1, -1):
                 point(screen, 1, x + i, y + int(((y_e - y) / (x_e - x)) * i))
         else:
-            for i in range(abs(y_e - y) + 1):
-                point(screen, 1, x, y + i * ((y_e - y) / abs(y_e - y)))
+            if y_e - y > 0:
+                for i in range(y_e - y + 1):
+                    point(screen, 1, x, y + i)
+            elif y_e - y < 0:
+                for i in range(0, y_e - y - 1, -1):
+                    point(screen, 1, x, y + i)
     else:
         if y_e - y > 0:
             for i in range(y_e - y + 1):
@@ -43,26 +46,33 @@ def line(screen, list_start_end):
             for i in range(0, y_e - y - 1, -1):
                 point(screen, 1, x + int(((x_e - x) / (y_e - y)) * i), y + i)
         else:
-            for i in range(abs(x_e - x) + 1):
-                point(screen, 1, x + i * ((x_e - x) / abs(x_e - x)), y)
+            if x_e - x > 0:
+                for i in range(abs(x_e - x) + 1):
+                    point(screen, 1, x + i, y)
+            elif x_e - x < 0:
+                for i in range(0, x_e - x - 1, -1):
+                    point(screen, 1, x + i, y)
 
 
-for i in range(-150,151):
-    line(screen, (300, 300, 150+i, 150))
-    line(screen, (300, 300, 150 , 150+i))
-    pygame.display.flip()
+# 画个立方体
+def Cuab(x, y, w):
+    line(screen, (x, y, x - w, y - w))
+    line(screen, (x - w, y - w, x, x - 2 * w))
+    line(screen, (x, y, x + w, y - w))
+    line(screen, (x + w, y - w, x, y - 2 * w))
 
-# for i in range(500):
-#     point(screen,1,200 + i, 100 + i*3, (255, 0, 0))
+    line(screen, (x, y, x, y - w))
+    line(screen, (x - w, y - w, x - w, y - 2 * w))
+    line(screen, (x, y - 2 * w, x, y - 3 * w))
+    line(screen, (x + w, y - w, x + w, y - 2 * w))
 
-# def circle(screen, x, y, r):
-#     for i in range(-r, r + 1):
-#         for j in range(-r, r + 1):
-#             if i ** 2 + j ** 2 == r ** 2:
-#                 point(screen, 1, x + i, y + j)
-# for r in range(1,301):
-#     circle(screen, 300, 300, r)
+    line(screen, (x, y - w, x - w, y - 2 * w))
+    line(screen, (x - w, y - 2 * w, x, y - 2 * w))
+    line(screen, (x, y - 2 * w, x - w, y - 2 * w))
+    line(screen, (x + w, y - 2 * w, x, y - w))
 
+
+Cuab(400,400,80)
 pygame.display.flip()
 
 running = True
