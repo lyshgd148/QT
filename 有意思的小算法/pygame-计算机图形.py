@@ -1,7 +1,6 @@
 import pygame
 from pygame.locals import *
 
-
 pygame.init()
 width, height = 600, 600
 screen = pygame.display.set_mode((width, height), flags=pygame.NOFRAME)
@@ -57,7 +56,7 @@ def line(screen, list_start_end):
 # 画个立方体
 def Cuab(x, y, w):
     line(screen, (x, y, x - w, y - w))
-    line(screen, (x - w, y - w, x, x - 2 * w))
+    line(screen, (x - w, y - w, x, y - 2 * w))
     line(screen, (x, y, x + w, y - w))
     line(screen, (x + w, y - w, x, y - 2 * w))
 
@@ -67,12 +66,12 @@ def Cuab(x, y, w):
     line(screen, (x + w, y - w, x + w, y - 2 * w))
 
     line(screen, (x, y - w, x - w, y - 2 * w))
-    line(screen, (x - w, y - 2 * w, x, y - 2 * w))
-    line(screen, (x, y - 2 * w, x - w, y - 2 * w))
+    line(screen, (x - w, y - 2 * w, x, y - 3 * w))
+    line(screen, (x, y - 3 * w, x + w, y - 2 * w))
     line(screen, (x + w, y - 2 * w, x, y - w))
 
 
-Cuab(400,400,80)
+Cuab(213, 314, 80)
 pygame.display.flip()
 
 running = True
