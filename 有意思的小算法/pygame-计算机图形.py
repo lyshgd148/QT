@@ -4,6 +4,7 @@ from pygame.locals import *
 pygame.init()
 width, height = 600, 600
 screen = pygame.display.set_mode((width, height), flags=pygame.NOFRAME)
+running = True
 
 
 # 画点
@@ -72,9 +73,9 @@ def Cuab(x, y, w):
 
 
 Cuab(213, 314, 80)
+Cuab(500, 456, 50)
 pygame.display.flip()
 
-running = True
 while running:
     for event in pygame.event.get():
         if event.type == QUIT:

@@ -29,4 +29,4 @@ plt.fill_between(date[4:], upper, lower, lower < upper, color='orangered', alpha
 plt.legend()
 plt.gcf().autofmt_xdate()
 plt.show()
-#布林带
+# 布林带
