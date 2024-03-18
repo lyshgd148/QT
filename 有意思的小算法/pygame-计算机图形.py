@@ -6,7 +6,8 @@ width, height = 600, 600
 screen = pygame.display.set_mode((width, height), flags=pygame.NOFRAME)
 running = True
 
-
+#这一步还可以进一步优化，我要重新一个这个方法，目前我只用一个像素，
+#这个放法优化的话，我想选者打表，表中没有的话在进行计算，这样会大大提高效率！
 # 画点
 def point(screen, radius, x, y, color=(255, 255, 255)):
     for i in range(-radius, radius + 1):
