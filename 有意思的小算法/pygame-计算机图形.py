@@ -1,19 +1,30 @@
 import pygame
 from pygame.locals import *
+import math
 
 pygame.init()
 width, height = 600, 600
 screen = pygame.display.set_mode((width, height), flags=pygame.NOFRAME)
 running = True
 
-#这一步还可以进一步优化，我要重新一个这个方法，目前我只用一个像素，
-#这个放法优化的话，我想选者打表，表中没有的话在进行计算，这样会大大提高效率！
+
+# 这一步还可以进一步优化，我要重新一个这个方法，目前我只用一个像素，
+# 这个放法优化的话，我想选者打表，表中没有的话在进行计算，这样会大大提高效率！
 # 画点
 def point(screen, radius, x, y, color=(255, 255, 255)):
-    for i in range(-radius, radius + 1):
-        for j in range(-radius, radius + 1):
-            if i ** 2 + j ** 2 <= radius ** 2:
-                screen.set_at((x + i, y + j), color)
+    temp = radius  # 哈哈，有一点写代码的逻辑在里面了！
+    screen.set_at((x, y), color)
+    screen.set_at((x + 1, y), color)
+    screen.set_at((x - 1, y), color)
+    screen.set_at((x, y + 1), color)
+    screen.set_at((x, y - 1), color)
+
+
+# def point(screen, radius, x, y, color=(255, 255, 255)):
+#     for i in range(-radius, radius + 1):
+#         for j in range(-radius, radius + 1):
+#             if i ** 2 + j ** 2 <= radius ** 2:
+#                 screen.set_at((x + i, y + j), color)
 
 
 # 画线
@@ -73,8 +84,26 @@ def Cuab(x, y, w):
     line(screen, (x + w, y - 2 * w, x, y - w))
 
 
+# 画圆
+# 这一步的分段画法太漂亮了
+def Circle(screen, r, x, y, color=(255, 255, 255)):
+    if r > 0:
+        for i in range(-int(r / 2), int(r / 2) + 1):
+            y_temp = math.ceil(math.sqrt(r ** 2 - i ** 2))
+            point(screen, 1, i + x, y + y_temp)
+            point(screen, 1, i + x, y - y_temp, color)
+        n = math.ceil(math.sqrt(r ** 2 - (r / 2) ** 2))
+        for i in range(0, n + 1):
+            x_temp = math.ceil(math.sqrt(r ** 2 - i ** 2))
+            point(screen, 1, x + x_temp, y + i, color)
+            point(screen, 1, x - x_temp, y + i, color)
+            point(screen, 1, x + x_temp, y - i, color)
+            point(screen, 1, x - x_temp, y - i, color)
+
+
 Cuab(213, 314, 80)
 Cuab(500, 456, 50)
+Circle(screen, 2, 445, 241)
 pygame.display.flip()
 
 while running:
