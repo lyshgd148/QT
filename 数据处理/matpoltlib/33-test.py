@@ -16,8 +16,8 @@ for i in range(3):
     A[i,] = Close[i:i + 3]
 
 print(A)
-B=Close[3:6]
+B = Close[3:6]
 
-x=np.linalg.lstsq(A,B)[0]
-print(np.dot(x,B))
+x = np.linalg.lstsq(A, B)[0]
+print(np.dot(x, B))
 print(Close)
