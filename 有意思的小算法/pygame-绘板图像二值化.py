@@ -9,13 +9,13 @@ width, height = 800, 800
 screen = pygame.display.set_mode((width, height), flags=pygame.NOFRAME)
 
 
-def point(screen, radius, x, y, color=(255, 255, 255)):
-    temp = radius  # 哈哈，有一点写代码的逻辑在里面了！
-    screen.set_at((x, y), color)
-    screen.set_at((x + 1, y), color)
-    screen.set_at((x - 1, y), color)
-    screen.set_at((x, y + 1), color)
-    screen.set_at((x, y - 1), color)
+# def point(screen, radius, x, y, color=(255, 255, 255)):
+#     temp = radius  # 哈哈，有一点写代码的逻辑在里面了！
+#     screen.set_at((x, y), color)
+#     screen.set_at((x + 1, y), color)
+#     screen.set_at((x - 1, y), color)
+#     screen.set_at((x, y + 1), color)
+#     screen.set_at((x, y - 1), color)
 
 
 def gray2twoValue(image):
@@ -46,10 +46,9 @@ def draw_picture(screen, x, y, img):
     h, w = img.shape
     for i in range(h):
         for j in range(w):
-            if img[i, j] == 0:
-                point(screen, 1, x + j, y + i, (0, 0, 0))
-            else:
-                point(screen, 1, x + j, y + i, (255, 255, 255))
+            if img[i, j] != 0:
+                screen.set_at((x + j, y + i), (255,255,255))
+                # point(screen, 1, x + j, y + i, (255, 255, 255))
 
 
 img = gray2twoValue("test.jpeg")
