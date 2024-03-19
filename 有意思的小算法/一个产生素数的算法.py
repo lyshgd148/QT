@@ -22,9 +22,8 @@
 # 哈哈先生成10w个简单测试一下,牛逼
 
 
-# 产生一个素数的改进算法
+# 产生一个素数的改进算法 ,开根算法极大的减少了运算量
 import math
-
 
 def Prime(n):
     prime_list = list(range(1, n + 1))
@@ -35,4 +34,4 @@ def Prime(n):
     return prime_list
 
 
-print(Prime(100000))
+print(Prime(1000000))

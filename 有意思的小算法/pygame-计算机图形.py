@@ -3,7 +3,7 @@ from pygame.locals import *
 import math
 
 pygame.init()
-width, height = 600, 600
+width, height = 800, 800
 screen = pygame.display.set_mode((width, height), flags=pygame.NOFRAME)
 running = True
 
