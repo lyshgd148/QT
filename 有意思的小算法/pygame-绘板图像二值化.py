@@ -2,7 +2,6 @@ import pygame
 from pygame.locals import *
 import cv2
 import numpy as np
-import json
 from scipy.signal import convolve2d
 
 pygame.init()
@@ -40,16 +39,22 @@ def gray2twoValue(image):
     mask_low = (img <= 150)
     img[mask_high] = 255
     img[mask_low] = 0
-    with open('img.json','w') as f:
-        json.dump(img.tolist(),f)
-    cv2.imshow('Sobel Edges', img)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+    return img
 
 
-gray2twoValue("test.jpeg")
+def draw_picture(screen, x, y, img):
+    h, w = img.shape
+    for i in range(h):
+        for j in range(w):
+            if img[i, j] == 0:
+                point(screen, 1, x + j, y + i, (0, 0, 0))
+            else:
+                point(screen, 1, x + j, y + i, (255, 255, 255))
 
-# pygame.display.flip()
+
+img = gray2twoValue("test.jpeg")
+draw_picture(screen, 50, 80, img)
+pygame.display.flip()
 while True:
     for event in pygame.event.get():
         if event.type == QUIT:
