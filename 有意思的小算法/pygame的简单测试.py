@@ -158,5 +158,3 @@
 #     pygame.display.flip()
 # # 点击关闭，退出pygame程序
 # pygame.quit()
-
-
