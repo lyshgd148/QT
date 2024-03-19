@@ -34,8 +34,14 @@ def gray2twoValue(image):
     sobel_y = convolve2d(img, kernel_y, mode='same')
     sobel_x = np.abs(sobel_x).astype(np.uint8)
     sobel_y = np.abs(sobel_y).astype(np.uint8)
-    img=0.5*sobel_x+0.5*sobel_y
-    img=img.astype(np.uint8)
+    img = 0.5 * sobel_x + 0.5 * sobel_y
+    img = img.astype(np.uint8)
+    mask_high = ((img > 150) & (img <= 255))
+    mask_low = (img <= 150)
+    img[mask_high] = 255
+    img[mask_low] = 0
+    with open('img.json','w') as f:
+        json.dump(img.tolist(),f)
     cv2.imshow('Sobel Edges', img)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
@@ -43,7 +49,7 @@ def gray2twoValue(image):
 
 gray2twoValue("test.jpeg")
 
-pygame.display.flip()
+# pygame.display.flip()
 while True:
     for event in pygame.event.get():
         if event.type == QUIT:
