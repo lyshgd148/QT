@@ -25,6 +25,7 @@
 # 产生素数的改进算法 ,开根算法极大的减少了运算量
 import math
 
+
 def Prime(n):
     prime_list = list(range(1, n + 1))
     for i in range(2, int(math.sqrt(n)) + 1):
@@ -34,4 +35,12 @@ def Prime(n):
     return prime_list
 
 
-print(Prime(1000000))
+with open('prime.txt', 'w') as f:
+    list1 = Prime(1000000)
+    n = 1
+    for i in list1:
+        if n % 20 == 0:
+            f.write(str(i) + '\n')
+        else:
+            f.write(str(i) + ',')
+        n += 1
