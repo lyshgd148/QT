@@ -75,3 +75,4 @@ with open('prime.txt', 'w') as f:
         else:
             f.write(str(i) + ',')
         n += 1
+ 
