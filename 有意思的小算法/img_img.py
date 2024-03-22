@@ -5,7 +5,7 @@ img = cv2.imread("test.jpeg")
 img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 img = img[::2]
 img = img[:, ::2]
-img = img[0:500:, 0:500:]
+img = img[0:400:, 0:400:]
 img = np.dot(img, img)
 img = img.astype(np.uint8)
 print(img)
