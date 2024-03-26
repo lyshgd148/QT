@@ -26,8 +26,7 @@ for i in range(n - 1):
     y.extend([dis_y[i]] + b)
 x.append(dis_x[-1])
 y.append(dis_y[-1])
-print(x)
-print(y)
+
 x = np.array(x)
 y = np.array(y)
 plt.scatter(dis_x, dis_y, color='red')
