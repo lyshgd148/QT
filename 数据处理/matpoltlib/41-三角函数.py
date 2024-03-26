@@ -19,9 +19,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 n = 1000
-x = np.linspace(0, 1, 50000)
+# x = np.linspace(0, 1, 1001)
+x = np.array([x / 1000+1/2500 for x in range(1, 1001)])
 y = np.sin(n * 2 * np.pi * x)
-
-plt.figure()
+plt.ylim(-0.01, 0.01)
 plt.plot(x, y)
 plt.show()
