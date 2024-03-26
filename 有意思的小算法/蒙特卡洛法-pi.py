@@ -1,7 +1,7 @@
 import random
 
 
-def my_Pi(n):
+def my_pi(n):
     hits = 0
     for i in range(n):
         x = random.random() * 2 - 1
@@ -11,4 +11,4 @@ def my_Pi(n):
     return 4 * (hits / n)
 
 
-my_Pi(10000000000)
+print(my_pi(10000000000))  # 太疯狂了，我用100亿个点，来估算圆周率！ result:
