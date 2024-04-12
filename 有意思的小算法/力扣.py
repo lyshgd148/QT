@@ -78,3 +78,28 @@ import random
 #
 # martix = [[5, 1, 9, 11], [2, 4, 8, 10], [13, 3, 6, 7], [15, 14, 12, 16]]
 # print(Solution2().rotate(martix))
+
+
+# 模拟链表
+class ListNode(object):
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+
+head = [1, 2, 3]
+node1 = ListNode(head[0])
+node2 = ListNode(head[1])
+node3 = ListNode(head[2])
+node1.next = node2
+node2.next = node3
+
+print(node1.val,node1.next.val,node1.next.next.val)
+
+# class Solution(object):
+#     def rotateRight(self, head, k):
+#         """
+#         :type head: ListNode
+#         :type k: int
+#         :rtype: ListNode
+#         """
