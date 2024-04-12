@@ -1,7 +1,7 @@
 class ListNode:
     def __init__(self, val=0, next_=None):
         self.val = val
-        self.next_ = next_
+        self.next = next
 
 
 ls = list(range(1, 101))
@@ -22,4 +22,4 @@ def creat_link(ls, head=None, prev=None):
 
 
 head = creat_link(ls)
-print(head.next_.val)
+print(head.next.val)

@@ -1,6 +1,5 @@
 import random
 
-
 # # 力扣:50
 # class Solution(object):
 #     def myPow(self, x, n):
@@ -80,32 +79,55 @@ import random
 # print(Solution2().rotate(martix))
 
 
-# 模拟链表
-class ListNode(object):
-    def __init__(self, val=0, next=None):
-        self.val = val
-        self.next = next
-
-
-def creat_link(ls, head=None, prev=None):
-    for i in range(len(ls)):
-        cur = ListNode(ls[i])
-
-        if i == 0:
-            head = cur
-            prev = cur
-        else:
-            prev.next_ = cur
-            prev = cur
-    return head
-
-
-ls = [1, 2, 3, 4, 5]
-head = creat_link(ls)
-
-
-class Solution(object):
-    def rotateRight(self, head, k):
-        if not head:
-            return head
-        n = 1
+# # 模拟链表
+# class ListNode(object):
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+#
+#
+# def creat_link(ls, head=None, prev=None):
+#     for i in range(len(ls)):
+#         cur = ListNode(ls[i])
+#
+#         if i == 0:
+#             head = cur
+#             prev = cur
+#         else:
+#             prev.next = cur
+#             prev = cur
+#     return head
+#
+#
+# ls = [1, 2, 3, 4, 5]
+# head = creat_link(ls)
+#
+#
+# class Solution(object):
+#     def rotateRight(self, head, k):
+#         if not head:
+#             return head
+#         n = 1
+#         cur = head
+#
+#         while cur.next:
+#             cur = cur.next
+#             n += 1
+#
+#         cur.next = head
+#
+#         if (sum := n - k % n) == n:
+#             return head
+#
+#         while sum :
+#             cur = cur.next
+#             sum -= 1
+#
+#         ret = cur.next
+#         cur.next=None
+#         return ret
+#
+# start=Solution().rotateRight(head,2)
+# while start.next:
+#     print(start.val)
+#     start=start.next
