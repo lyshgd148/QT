@@ -87,19 +87,25 @@ class ListNode(object):
         self.next = next
 
 
-head = [1, 2, 3]
-node1 = ListNode(head[0])
-node2 = ListNode(head[1])
-node3 = ListNode(head[2])
-node1.next = node2
-node2.next = node3
+def creat_link(ls, head=None, prev=None):
+    for i in range(len(ls)):
+        cur = ListNode(ls[i])
 
-print(node1.val,node1.next.val,node1.next.next.val)
+        if i == 0:
+            head = cur
+            prev = cur
+        else:
+            prev.next_ = cur
+            prev = cur
+    return head
 
-# class Solution(object):
-#     def rotateRight(self, head, k):
-#         """
-#         :type head: ListNode
-#         :type k: int
-#         :rtype: ListNode
-#         """
+
+ls = [1, 2, 3, 4, 5]
+head = creat_link(ls)
+
+
+class Solution(object):
+    def rotateRight(self, head, k):
+        if not head:
+            return head
+        n = 1

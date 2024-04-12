@@ -8,7 +8,7 @@ ls = list(range(1, 101))
 
 
 # 创建链表
-def cteat_link(ls, head=None, prev=None):
+def creat_link(ls, head=None, prev=None):
     for i in range(len(ls)):
         cur = ListNode(ls[i])
 
@@ -21,5 +21,5 @@ def cteat_link(ls, head=None, prev=None):
     return head
 
 
-head = cteat_link(ls)
+head = creat_link(ls)
 print(head.next_.val)
