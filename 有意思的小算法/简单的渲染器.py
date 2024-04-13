@@ -102,15 +102,15 @@ def Circle(screen, r, x, y, color=(255, 255, 255)):
             point(screen, 1, x - x_temp, y - i, color)
 
 
-cub_data = np.array([[-100, 100, -100, 100, -100, 100, -100, 100],
+cub_data = np.array([[-100, -100, 100, 100, -100, -100, 100, 100],
                      [-100, 100, -100, 100, -100, 100, -100, 100],
                      [100, 100, 100, 100, -100, -100, -100, -100],
                      [1, 1, 1, 1, 1, 1, 1, 1]])  # [x,y,z] 物体数据
 
-reduce_dimension = np.array([[1, 0, 0, 0],
-                             [0, 1, 0, 0],
-                             [0, 0, 0, 0],
-                             [0, 0, 0, 1]])  # 降维矩阵
+# reduce_dimension = np.array([[1, 0, 0, 0],
+#                              [0, 1, 0, 0],
+#                              [0, 0, 0, 0],
+#                              [0, 0, 0, 1]])  # 降维矩阵 (麻痹的扯淡，完全不需要 反而增加运算量！)
 a = 1  # 缩放系数
 scale_matrix = np.array([[a, 0, 0, 0],
                          [0, a, 0, 0],
@@ -142,10 +142,60 @@ def matrix_vector(matrix, vector):
     return data
 
 
+def draw(matrix):
+    matrix = matrix[:2, :]
+    temp = [matrix[0][0]+400, matrix[0][1]+400, matrix[1][0]+400, matrix[1][1]+400]
+    line(screen, temp)  # 1
+    temp = [matrix[0][1]+400, matrix[0][3]+400, matrix[1][1]+400, matrix[1][3]+400]
+    line(screen, temp)  # 2
+    temp = [matrix[0][3]+400, matrix[0][2]+400, matrix[1][3]+400, matrix[1][2]+400]
+    line(screen, temp)  # 3
+    temp = [matrix[0][2]+400, matrix[0][0]+400, matrix[1][2]+400, matrix[1][0]+400]
+    line(screen, temp)  # 4
+    temp = [matrix[0][4]+400, matrix[0][5]+400, matrix[1][4]+400, matrix[1][5]+400]
+    line(screen, temp)  # 5
+    temp = [matrix[0][5]+400, matrix[0][7]+400, matrix[1][5]+400, matrix[1][7]+400]
+    line(screen, temp)  # 6
+    temp = [matrix[0][7]+400, matrix[0][6]+400, matrix[1][7]+400, matrix[1][6]+400]
+    line(screen, temp)  # 7
+    temp = [matrix[0][6]+400, matrix[0][4]+400, matrix[1][6]+400, matrix[1][4]+400]
+    line(screen, temp)  # 8
+    temp = [matrix[0][0]+400, matrix[0][4]+400, matrix[1][0]+400, matrix[1][4]+400]
+    line(screen, temp)  # 9
+    temp = [matrix[0][1]+400, matrix[0][5]+400, matrix[1][1]+400, matrix[1][5]+400]
+    line(screen, temp)  # 10
+    temp = [matrix[0][3]+400, matrix[0][7]+400, matrix[1][3]+400, matrix[1][7]+400]
+    line(screen, temp)  # 11
+    temp = [matrix[0][2]+400, matrix[0][6]+400, matrix[1][2]+400, matrix[1][6]+400]
+    line(screen, temp)  # 12
+
 
 while running:
     for event in pygame.event.get():
         if event.type == QUIT:
             running = False
+        elif event.type == pygame.KEYDOWN:
+            key = event.key
+            if key == K_UP:
+                screen.fill((0, 0, 0))
+                draw(cub_data)
+                pass
+            elif key == K_DOWN:
+                screen.fill((0, 0, 0))
+                pass
+            elif key == K_RIGHT:
+                screen.fill((0, 0, 0))
+                pass
+            elif key == K_LEFT:
+                screen.fill((0, 0, 0))
+                pass
+            elif key == K_6:
+                screen.fill((0, 0, 0))
+                pass
+            elif key == K_4:
+                screen.fill((0, 0, 0))
+                pass
+
+        pygame.display.flip()
 
 pygame.quit()
