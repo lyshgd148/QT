@@ -29,16 +29,19 @@ def point(screen, radius, x, y, color=(255, 255, 255)):
 
 
 # 画线
-def line(screen, list_start_end):
+def line(screen, list_start_end):  # bug修复:两点重合
     '''
     :param list_start_end: 起点坐标，终点坐标
     '''
-    x = list_start_end[0]
-    y = list_start_end[1]
-    x_e = list_start_end[2]
-    y_e = list_start_end[3]
+    x = int(list_start_end[0])
+    y = int(list_start_end[1])
+    x_e = int(list_start_end[2])
+    y_e = int(list_start_end[3])
+    if x == y and x_e == y_e:
+        return
+
     if abs(x_e - x) >= abs(y_e - y):
-        if x_e - x >= 0:
+        if x_e - x > 0:
             for i in range(x_e - x + 1):
                 point(screen, 1, x + i, y + int(((y_e - y) / (x_e - x)) * i))
         elif x_e - x < 0:
@@ -111,27 +114,59 @@ cub_data = np.array([[-100, -100, 100, 100, -100, -100, 100, 100],
 #                              [0, 1, 0, 0],
 #                              [0, 0, 0, 0],
 #                              [0, 0, 0, 1]])  # 降维矩阵 (麻痹的扯淡，完全不需要 反而增加运算量！)
-a = 1  # 缩放系数
-scale_matrix = np.array([[a, 0, 0, 0],
-                         [0, a, 0, 0],
-                         [0, 0, a, 0],
-                         [0, 0, 0, 1]])  # 缩放矩阵
 
+
+theta = 2 * (np.pi / 200)
+a = 1  # 缩放系数
 x_rot = 0
 y_rot = 0
 z_rot = 0
-rot_x_matrix = np.array([[1, 0, 0, 0],
-                         [0, np.cos(x_rot), -np.sin(x_rot), 0],
-                         [0, np.sin(x_rot), np.cos(x_rot), 0],
-                         [0, 0, 0, 1]])
-rot_y_matrix = np.array([[np.cos(y_rot), 0, np.sin(y_rot), 0],
-                         [0, 1, 0, 0],
-                         [-np.sin(y_rot), 0, np.cos(y_rot), 0],
-                         [0, 0, 0, 1]])
-rot_z_matrix = np.array([[np.cos(z_rot), -np.sin(z_rot), 0, 0],
-                         [np.sin(z_rot), np.cos(z_rot), 0, 0],
-                         [0, 0, 1, 0],
-                         [0, 0, 0, 1]])
+
+
+def scale_matrix(a):
+    matrix = np.array([[a, 0, 0, 0],
+                       [0, a, 0, 0],
+                       [0, 0, a, 0],
+                       [0, 0, 0, 1]])
+    return matrix
+
+
+# rot_x_matrix = np.array([[1, 0, 0, 0],
+#                          [0, np.cos(x_rot), -np.sin(x_rot), 0],
+#                          [0, np.sin(x_rot), np.cos(x_rot), 0],
+#                          [0, 0, 0, 1]])
+# rot_y_matrix = np.array([[np.cos(y_rot), 0, np.sin(y_rot), 0],
+#                          [0, 1, 0, 0],
+#                          [-np.sin(y_rot), 0, np.cos(y_rot), 0],
+#                          [0, 0, 0, 1]])
+# rot_z_matrix = np.array([[np.cos(z_rot), -np.sin(z_rot), 0, 0],
+#                          [np.sin(z_rot), np.cos(z_rot), 0, 0],
+#                          [0, 0, 1, 0],
+#                          [0, 0, 0, 1]])
+
+
+def rot_y_matrix(y_rot):
+    matrix = np.array([[1, 0, 0, 0],
+                       [0, np.cos(y_rot), -np.sin(y_rot), 0],
+                       [0, np.sin(y_rot), np.cos(y_rot), 0],
+                       [0, 0, 0, 1]])
+    return matrix
+
+
+def rot_x_matrix(x_rot):
+    matrix = np.array([[np.cos(x_rot), 0, np.sin(x_rot), 0],
+                       [0, 1, 0, 0],
+                       [-np.sin(x_rot), 0, np.cos(x_rot), 0],
+                       [0, 0, 0, 1]])
+    return matrix
+
+
+def rot_z_matrix(z_rot):
+    matrix = np.array([[np.cos(z_rot), -np.sin(z_rot), 0, 0],
+                       [np.sin(z_rot), np.cos(z_rot), 0, 0],
+                       [0, 0, 1, 0],
+                       [0, 0, 0, 1]])
+    return matrix
 
 
 def matrix_vector(matrix, vector):
@@ -144,32 +179,45 @@ def matrix_vector(matrix, vector):
 
 def draw(matrix):
     matrix = matrix[:2, :]
-    temp = [matrix[0][0]+400, matrix[0][1]+400, matrix[1][0]+400, matrix[1][1]+400]
+    temp = [matrix[0][0] + 400, matrix[1][0] + 400, matrix[0][1] + 400, matrix[1][1] + 400]
     line(screen, temp)  # 1
-    temp = [matrix[0][1]+400, matrix[0][3]+400, matrix[1][1]+400, matrix[1][3]+400]
+    print('-')
+    temp = [matrix[0][1] + 400, matrix[1][1] + 400, matrix[0][3] + 400, matrix[1][3] + 400]
     line(screen, temp)  # 2
-    temp = [matrix[0][3]+400, matrix[0][2]+400, matrix[1][3]+400, matrix[1][2]+400]
+    print('-')
+    temp = [matrix[0][3] + 400, matrix[1][3] + 400, matrix[0][2] + 400, matrix[1][2] + 400]
     line(screen, temp)  # 3
-    temp = [matrix[0][2]+400, matrix[0][0]+400, matrix[1][2]+400, matrix[1][0]+400]
+    print('-')
+    temp = [matrix[0][2] + 400, matrix[1][2] + 400, matrix[0][0] + 400, matrix[1][0] + 400]
     line(screen, temp)  # 4
-    temp = [matrix[0][4]+400, matrix[0][5]+400, matrix[1][4]+400, matrix[1][5]+400]
+    print('-')
+    temp = [matrix[0][4] + 400, matrix[1][4] + 400, matrix[0][5] + 400, matrix[1][5] + 400]
     line(screen, temp)  # 5
-    temp = [matrix[0][5]+400, matrix[0][7]+400, matrix[1][5]+400, matrix[1][7]+400]
+    print('-')
+    temp = [matrix[0][5] + 400, matrix[1][5] + 400, matrix[0][7] + 400, matrix[1][7] + 400]
     line(screen, temp)  # 6
-    temp = [matrix[0][7]+400, matrix[0][6]+400, matrix[1][7]+400, matrix[1][6]+400]
+    print('-')
+    temp = [matrix[0][7] + 400, matrix[1][7] + 400, matrix[0][6] + 400, matrix[1][6] + 400]
     line(screen, temp)  # 7
-    temp = [matrix[0][6]+400, matrix[0][4]+400, matrix[1][6]+400, matrix[1][4]+400]
+    print('-')
+    temp = [matrix[0][6] + 400, matrix[1][6] + 400, matrix[0][4] + 400, matrix[1][4] + 400]
     line(screen, temp)  # 8
-    temp = [matrix[0][0]+400, matrix[0][4]+400, matrix[1][0]+400, matrix[1][4]+400]
+    print('-')
+    temp = [matrix[0][0] + 400, matrix[1][0] + 400, matrix[0][4] + 400, matrix[1][4] + 400]
     line(screen, temp)  # 9
-    temp = [matrix[0][1]+400, matrix[0][5]+400, matrix[1][1]+400, matrix[1][5]+400]
+    print('-')
+    temp = [matrix[0][1] + 400, matrix[1][1] + 400, matrix[0][5] + 400, matrix[1][5] + 400]
     line(screen, temp)  # 10
-    temp = [matrix[0][3]+400, matrix[0][7]+400, matrix[1][3]+400, matrix[1][7]+400]
+    print('-')
+    temp = [matrix[0][3] + 400, matrix[1][3] + 400, matrix[0][7] + 400, matrix[1][7] + 400]
     line(screen, temp)  # 11
-    temp = [matrix[0][2]+400, matrix[0][6]+400, matrix[1][2]+400, matrix[1][6]+400]
+    print('-')
+    temp = [matrix[0][2] + 400, matrix[1][2] + 400, matrix[0][6] + 400, matrix[1][6] + 400]
     line(screen, temp)  # 12
+    print('-')
 
 
+draw(cub_data)
 while running:
     for event in pygame.event.get():
         if event.type == QUIT:
@@ -178,24 +226,48 @@ while running:
             key = event.key
             if key == K_UP:
                 screen.fill((0, 0, 0))
+                y_rot -= theta
+                cub_data = matrix_vector(rot_y_matrix(y_rot), cub_data)
                 draw(cub_data)
-                pass
             elif key == K_DOWN:
                 screen.fill((0, 0, 0))
-                pass
+                y_rot += theta
+                cub_data = matrix_vector(rot_y_matrix(y_rot), cub_data)
+                draw(cub_data)
             elif key == K_RIGHT:
                 screen.fill((0, 0, 0))
-                pass
+                x_rot -= theta
+                cub_data = matrix_vector(rot_x_matrix(x_rot), cub_data)
+                draw(cub_data)
             elif key == K_LEFT:
                 screen.fill((0, 0, 0))
-                pass
+                x_rot += theta
+                cub_data = matrix_vector(rot_x_matrix(x_rot), cub_data)
+                draw(cub_data)
+
             elif key == K_6:
                 screen.fill((0, 0, 0))
-                pass
+                z_rot -= theta
+                cub_data = matrix_vector(rot_z_matrix(z_rot), cub_data)
+                draw(cub_data)
             elif key == K_4:
                 screen.fill((0, 0, 0))
-                pass
+                z_rot += theta
+                cub_data = matrix_vector(rot_z_matrix(z_rot), cub_data)
+                draw(cub_data)
+
+            elif key == K_7:
+                screen.fill((0, 0, 0))
+                a -= 0.1
+                cub_data = matrix_vector(scale_matrix(a), cub_data)
+                draw(cub_data)
+            elif key == K_9:
+                screen.fill((0, 0, 0))
+                a += 0.1
+                cub_data = matrix_vector(scale_matrix(a), cub_data)
+                draw(cub_data)
 
         pygame.display.flip()
 
 pygame.quit()
+
