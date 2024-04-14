@@ -116,21 +116,19 @@ cub_data = np.array([[-100, -100, 100, 100, -100, -100, 100, 100],
 #                              [0, 0, 0, 1]])  # 降维矩阵 (麻痹的扯淡，完全不需要 反而增加运算量！)
 
 
-
-
 theta = 2 * (np.pi / 200)
 a = 1  # 缩放系数
 x_rot = 0
 y_rot = 0
 z_rot = 0
 
-def scale_matrix(a):
-    matrix=np.array([[a, 0, 0, 0],
-              [0, a, 0, 0],
-              [0, 0, a, 0],
-              [0, 0, 0, 1]])
-    return matrix
 
+def scale_matrix(a):
+    matrix = np.array([[a, 0, 0, 0],
+                       [0, a, 0, 0],
+                       [0, 0, a, 0],
+                       [0, 0, 0, 1]])
+    return matrix
 
 
 # rot_x_matrix = np.array([[1, 0, 0, 0],
@@ -217,6 +215,7 @@ def draw(matrix):
     temp = [matrix[0][2] + 400, matrix[1][2] + 400, matrix[0][6] + 400, matrix[1][6] + 400]
     line(screen, temp)  # 12
     print('-')
+
 
 draw(cub_data)
 while running:
