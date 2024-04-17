@@ -39,3 +39,4 @@ print(f'图像中的连同区域有{num}个')
 cv2.imshow(' ', image * 255)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
+            #刘雨生 写于2024.4.18
