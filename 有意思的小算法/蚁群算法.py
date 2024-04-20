@@ -34,5 +34,7 @@ def roulette(rate):
             break
     return index
 
+def walk(i,j,table):
+    data_new=data[i]
 
 
