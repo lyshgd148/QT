@@ -35,7 +35,7 @@ def roulette(rate):
     return index
 
 
-def walk(i, table):  # table 放自己所在位置 以及走过的索引
+def walk(i, table):  # table 放自己所在位置 以及走过的索引 返回去往下一个地点的索引！
     data_new = data[i]
     sign_density_new = sign_density[i]
     p = list()
@@ -50,3 +50,31 @@ def walk(i, table):  # table 放自己所在位置 以及走过的索引
             p.append(0)
     index = roulette(p)
     return index
+
+
+def continue_walk(index):
+    table = list()
+    table.append(index)
+    for i in range(len(data[0]) - 1):
+        index = walk(table[i], table)
+        table.append(index)
+    table.append(table[0])
+    return table
+
+
+def inint_(num_ants):
+    index = list()
+    for i in range(num_ants):
+        index.append(random.randint(0, 4))
+    return index
+
+
+def multi_continue_walk(num_ants):
+    num_ants_index = inint_(num_ants)
+    table = list()
+    for i in num_ants_index:
+        table.append(continue_walk(i))
+    print(table)
+
+
+multi_continue_walk(num_ants)

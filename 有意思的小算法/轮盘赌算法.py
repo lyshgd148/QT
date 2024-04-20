@@ -17,11 +17,11 @@ def roulette(rate):
     return index
 
 
-rate = [0.2, 0.1, 0.2, 0.4, 0.1]
+rate = [0, 0, 0, 0, 0]
 
 temp = list()
 temp_num = []
-for i in range(100000):
+for i in range(100):
     num = roulette(rate)
     temp.append(num)
 
