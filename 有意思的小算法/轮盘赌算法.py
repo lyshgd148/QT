@@ -1,4 +1,6 @@
 import random
+
+
 def roulette(rate):
     rand_num = random.random()
     rate_new = list()

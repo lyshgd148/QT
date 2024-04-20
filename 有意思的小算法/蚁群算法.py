@@ -35,16 +35,4 @@ def roulette(rate):
     return index
 
 
-rate = [0.2, 0.1, 0.2, 0.4, 0.1]
 
-temp = list()
-temp_num = []
-for i in range(100000):
-    num = roulette(rate)
-    temp.append(num)
-
-for i in range(5):
-    temp_num.append(temp.count(i))
-
-print(temp)
-print(temp_num)
