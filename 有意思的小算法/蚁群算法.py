@@ -34,7 +34,19 @@ def roulette(rate):
             break
     return index
 
-def walk(i,j,table):
-    data_new=data[i]
 
-
+def walk(i, table):  # table 放自己所在位置 以及走过的索引
+    data_new = data[i]
+    sign_density_new = sign_density[i]
+    p = list()
+    num = 0
+    for j in range(len(data_new)):
+        if j not in table:
+            num += (((1 / data_new[j]) ** b) * (sign_density_new[j] ** a))
+    for j in range(len(data_new)):
+        if j not in table:
+            p.append((((1 / data_new[j]) ** b) * (sign_density_new[j] ** a)) / num)
+        else:
+            p.append(0)
+    index = roulette(p)
+    return index
