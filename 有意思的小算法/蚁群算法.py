@@ -20,6 +20,9 @@ b = 5
 
 
 def roulette(rate):
+    '''
+    轮盘赌算法
+    '''
     rand_num = random.random()
     rate_new = list()
     index = 0
@@ -35,11 +38,19 @@ def roulette(rate):
     return index
 
 
-def walk(i, table):  # table 放自己所在位置 以及走过的索引 返回去往下一个地点的索引！
+def inint_(num_ants):
+    index = list()
+    for i in range(num_ants):
+        index.append(random.randint(0, 4))
+    return index
+
+
+def walk(i, table):  # table 放自己所在位置 以及走过的索引 返回去往下一个地点的索引！ 只走一步！
     data_new = data[i]
     sign_density_new = sign_density[i]
     p = list()
     num = 0
+    length = 0
     for j in range(len(data_new)):
         if j not in table:
             num += (((1 / data_new[j]) ** b) * (sign_density_new[j] ** a))
@@ -49,32 +60,36 @@ def walk(i, table):  # table 放自己所在位置 以及走过的索引 返回�
         else:
             p.append(0)
     index = roulette(p)
-    return index
+    length = data[i][index]
+    return index, length
 
 
 def continue_walk(index):
     table = list()
     table.append(index)
+    length = 0
     for i in range(len(data[0]) - 1):
-        index = walk(table[i], table)
+        temp = walk(table[i], table)
+        index = temp[0]
         table.append(index)
+        length += temp[1]
     table.append(table[0])
-    return table
+    length += data[index][table[0]]
+    # print(table, length)
+    return table, length
 
 
-def inint_(num_ants):
-    index = list()
-    for i in range(num_ants):
-        index.append(random.randint(0, 4))
-    return index
-
-
-def multi_continue_walk(num_ants):
+def multi_continue_walk(num_ants):  # num_ants 蚂蚁的数量
     num_ants_index = inint_(num_ants)
     table = list()
+    length = list()
     for i in num_ants_index:
-        table.append(continue_walk(i))
-    print(table)
+        temp = continue_walk(i)
+        table.append(temp[0])
+        length.append(temp[1])
+    return table, length
 
 
-multi_continue_walk(num_ants)
+# multi_continue_walk(num_ants)
+def renew_rou():
+    pass
