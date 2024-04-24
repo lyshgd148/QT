@@ -1,2 +1,2 @@
-def factoring(numeractor,denominator):
+def factoring(numeractor, denominator):
     pass
