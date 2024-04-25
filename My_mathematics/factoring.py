@@ -299,7 +299,7 @@ def factoring(numerator, denominator):
                 else:
                     print(f'{temp[i]}x^{len(temp) - 1 - i}', end='')
 
-    print('\n')
+    print(' ')
     for i in range(string_num1):
         print('-', end='')
     print(' = ', end='')
@@ -338,7 +338,7 @@ def factoring(numerator, denominator):
     for i in range(string_num3 + 2):
         print('-', end='')
 
-    print('\n')
+    print(' ')
     for i in range(len(denominator)):
         if i != len(denominator) - 1:
             if i == 0:
@@ -402,12 +402,10 @@ def factoring(numerator, denominator):
                     print(f'-x^{len(denominator) - 1 - i}', end='')
                 else:
                     print(f'{denominator[i]}x^{len(denominator) - 1 - i}', end='')
-
+    print('\n')
     return result, temp
 
 
 if __name__ == "__main__":
-    # temp = LU_decompose.LU_decompose([[1, 2, 3], [3, 2, 5], [4, 6, 7]], [2, 5, 1])
-    # print(temp)
-    temp = factoring([1, -4, 6, -4, 1, 0, 0, 0, 0], [1, 0, 1])
-    # print(temp)
+    factoring([1, -4, 6, -4, 1, 0, 0, 0, 0], [1, 0, 1])
+    factoring([3,2,2,1,3], [1, 0, 1])
