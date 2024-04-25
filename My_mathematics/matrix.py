@@ -23,5 +23,5 @@ def matrix_mulitiplication(a, b):
 
 
 if __name__ == "__main__":
-    temp = matrix_mulitiplication([[1, 2], [3, 4]], [[1, 0]])
+    temp = matrix_mulitiplication([[1, 2, 4], [3, 4, 5], [6, 7, 8]], [[1, 2, 3], [3, 4, 5], [7, 8, 3]])
     print(temp)
