@@ -1,3 +1,4 @@
+import copy
 def nzero(matrix):
     n = len(matrix)
     m = len(matrix[0])
@@ -29,33 +30,34 @@ def LU_decompose(coefficent, b):
     n = len(coefficent)
     m = len(coefficent[0])
     m += 1
+    coefficent_new=copy.deepcopy(coefficent)
     for i in range(n):  # 增广矩阵
-        coefficent[i].append(b[i])
+        coefficent_new[i].append(b[i])
 
     for j in range(m - 2):
-        temp = coefficent[j:]
+        temp = coefficent_new[j:]
         temp = [i[j:] for i in temp]
         for i in range(1, len(temp)):
             nzero(temp)
             k1 = temp[i][0]
             temp[i] = [temp[i][t1] - k1 * temp[0][t1] for t1 in range(len(temp[0]))]
         for k in range(n - j):
-            coefficent[k + j] = []
+            coefficent_new[k + j] = []
             for t in range(j):
-                coefficent[k + j].append(0)
-            coefficent[k + j].extend(temp[k])
+                coefficent_new[k + j].append(0)
+            coefficent_new[k + j].extend(temp[k])
 
-    if coefficent[-1][-2] == 0:
+    if coefficent_new[-1][-2] == 0:
         raise ValueError('该线性方程组无唯一解')
 
-    coefficent[-1][-2], coefficent[-1][-1] = 1, coefficent[-1][-1] / coefficent[-1][-2]
+    coefficent_new[-1][-2], coefficent_new[-1][-1] = 1, coefficent_new[-1][-1] / coefficent_new[-1][-2]
     for i in range(n - 1):
         for t in range(n - 1 - i):
-            k2 = coefficent[n - 2 - i - t][m - 2 - i]
-            coefficent[n - 2 - i - t] = [coefficent[n - 2 - i - t][num] - k2 * coefficent[n - 1 - i][num] for num in
+            k2 = coefficent_new[n - 2 - i - t][m - 2 - i]
+            coefficent_new[n - 2 - i - t] = [coefficent_new[n - 2 - i - t][num] - k2 * coefficent_new[n - 1 - i][num] for num in
                                          range(m)]
     temp = list()
-    for i in coefficent:
+    for i in coefficent_new:
         temp.append(i[-1])
     return temp
 

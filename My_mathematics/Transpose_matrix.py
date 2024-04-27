@@ -6,8 +6,9 @@ def transpose_matrix(matrix):
     # for i in range(n):
     #     for j in range(m):
     #         matrix_new[j][i] = matrix[i][j]
-    matrix=[[row[i] for row in matrix] for i in range(m)]
-    return matrix
+
+    temp = [[row[i] for row in matrix] for i in range(m)]
+    return temp
 
 
 if __name__ == '__main__':
