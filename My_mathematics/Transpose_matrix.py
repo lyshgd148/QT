@@ -2,12 +2,12 @@ def transpose_matrix(matrix):
     n = len(matrix)
     m = len(matrix[0])
 
-    matrix_new = [[0] * n for _ in range(m)]
-    for i in range(n):
-        for j in range(m):
-            matrix_new[j][i] = matrix[i][j]
-
-    return matrix_new
+    # matrix_new = [[0] * n for _ in range(m)]
+    # for i in range(n):
+    #     for j in range(m):
+    #         matrix_new[j][i] = matrix[i][j]
+    matrix=[[row[i] for row in matrix] for i in range(m)]
+    return matrix
 
 
 if __name__ == '__main__':
