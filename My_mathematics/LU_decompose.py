@@ -1,4 +1,6 @@
 import copy
+
+
 def nzero(matrix):
     n = len(matrix)
     m = len(matrix[0])
@@ -30,7 +32,7 @@ def LU_decompose(coefficent, b):
     n = len(coefficent)
     m = len(coefficent[0])
     m += 1
-    coefficent_new=copy.deepcopy(coefficent)
+    coefficent_new = copy.deepcopy(coefficent)
     for i in range(n):  # 增广矩阵
         coefficent_new[i].append(b[i])
 
@@ -54,8 +56,9 @@ def LU_decompose(coefficent, b):
     for i in range(n - 1):
         for t in range(n - 1 - i):
             k2 = coefficent_new[n - 2 - i - t][m - 2 - i]
-            coefficent_new[n - 2 - i - t] = [coefficent_new[n - 2 - i - t][num] - k2 * coefficent_new[n - 1 - i][num] for num in
-                                         range(m)]
+            coefficent_new[n - 2 - i - t] = [coefficent_new[n - 2 - i - t][num] - k2 * coefficent_new[n - 1 - i][num]
+                                             for num in
+                                             range(m)]
     temp = list()
     for i in coefficent_new:
         temp.append(i[-1])
@@ -63,5 +66,5 @@ def LU_decompose(coefficent, b):
 
 
 if __name__ == "__main__":
-    temp = LU_decompose([[1, 2, 3], [2, 3, 4], [5, 7, 6]], [1, 2, 3])
+    temp = LU_decompose([[0.00000001, 2, 3], [-1, 3.712, 4.623], [-2, 1.072, 4.643]], [1, 2, 3])
     print(temp)
