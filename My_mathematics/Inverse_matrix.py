@@ -24,5 +24,6 @@ def inverse_matrix(matrix):
 if __name__ == "__main__":
     # temp = LU_decompose.LU_decompose([[1, 2], [3, 4]], [0, 1])
     # print(temp)
-    I = inverse_matrix([[1, 2], [3, 4]])
-    print(I)
+    I = inverse_matrix([[1, 2, 4, 5], [3, 4, 5, 5], [7, 8, 5, 7], [8, 9, 5, 4]])
+    for i in I:
+        print(i)
