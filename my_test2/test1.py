@@ -7,7 +7,7 @@ image = cv2.imread("./picture/1.jpg")
 def process_image(image, arr):
     image_ = image[arr[0]:arr[1], arr[2]:arr[3], 0:3]
     image_ = cv2.cvtColor(image_, cv2.COLOR_BGR2GRAY)
-    _, image_ = cv2.threshold(image_, 45, 255, cv2.THRESH_BINARY_INV)
+    _, image_ = cv2.threshold(image_, 170, 255, cv2.THRESH_BINARY_INV)
     return image_
 
 
@@ -26,15 +26,11 @@ def fianl_process(image, arr):
     image[arr[0]:arr[1], arr[2]:arr[3], 0:3] = i_n
 
 
-fianl_process(image, [174, 224, 94, 980])
-fianl_process(image, [319, 390, 116, 1005])
-fianl_process(image, [310, 376, 1027, 1078])
-fianl_process(image, [508, 580, 0, 95])
-fianl_process(image, [500, 570, 122, 1001])
-fianl_process(image, [490, 550, 1037, 1078])
-fianl_process(image, [690, 760, 0, 90])
-fianl_process(image, [675, 745, 124, 1014])
-fianl_process(image, [666, 734, 1045, 1078])
+fianl_process(image, [174, 238, 94, 980])
+fianl_process(image, [354, 424, 93, 967])
+fianl_process(image, [357, 410, 1005, 1073])
+fianl_process(image, [542, 595, 0, 61])
+fianl_process(image, [530, 595, 96, 968])
 
 cv2.imwrite('./picture/1_.jpg', image)
 cv2.imshow("Color Detection Result", image)
