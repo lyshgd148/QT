@@ -31,7 +31,7 @@ for i in range(4000):
     if num > num1:
         num = num1
         index = i
-print(num)
+print(num,x[index],y[index])
 ax = plt.gca()
 ax.set_aspect(1)
 plt.plot(x, y, color='black')

@@ -52,6 +52,7 @@ for i in range(300):
             num_ = num1
             index_i2, index_j2 = i, j
 
+print(x[index_j1], y[index_j1])
 ax = plt.gca()
 ax.set_aspect(1)
 plt.plot(x, y, color='black')
