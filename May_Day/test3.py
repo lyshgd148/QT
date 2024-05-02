@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import copy
 
 
+#同test.py
 def elliptic(a, b):
     x = np.linspace(0, a, 1000)
     y = b * np.sqrt(1 - (x ** 2 / a ** 2))
@@ -38,6 +39,7 @@ for j in range(4):
             index = j
 
 print(num, x[index1],y[index1])
+
 ax = plt.gca()
 ax.set_aspect(1)
 plt.plot(x, y, color='black')

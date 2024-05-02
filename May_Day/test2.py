@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import copy
 
-
+#创建椭圆
 def elliptic(a, b):
     x = np.linspace(0, a, 1000)
     y = b * np.sqrt(1 - (x ** 2 / a ** 2))
@@ -24,6 +24,7 @@ def elliptic(a, b):
 
 x, y = elliptic(15, 20)
 
+#同test1
 index = 0
 num = 1000000
 for i in range(4000):
