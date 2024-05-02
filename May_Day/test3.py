@@ -25,15 +25,21 @@ def elliptic(a, b):
 x, y = elliptic(15, 20)
 
 index = 0
+index1 = 0
 num = 1000000
-for i in range(4000):
-    num1 = np.sqrt((11 - x[i]) ** 2 + (6.5 - y[i]) ** 2)
-    if num > num1:
-        num = num1
-        index = i
-print(num)
+x1 = [-12, -12, 9, 11]
+y1 = [-13, 12, 14, -6]
+for j in range(4):
+    for i in range(4000):
+        num1 = np.sqrt((x1[j] - x[i]) ** 2 + (y1[j] - y[i]) ** 2)
+        if num1 < num:
+            num = num1
+            index1 = i
+            index = j
+
+print(num, index)
 ax = plt.gca()
 ax.set_aspect(1)
 plt.plot(x, y, color='black')
-plt.plot([11, x[index]], [6.5, y[index]], color='red')
+plt.plot([x1[index], x[index1]], [y1[index], y[index1]], color='red', linewidth=3)
 plt.show()
