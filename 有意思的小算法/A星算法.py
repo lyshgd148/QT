@@ -1,6 +1,5 @@
 import copy
 import matplotlib.pyplot as plt
-import numpy as np
 
 
 def a_star(map, start, goal, m, n):
@@ -91,7 +90,7 @@ if __name__ == "__main__":
            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1]]
     m = len(map)
     n = len(map[0])
-    temp = a_star(map, [1, 1], [m - 1, 14], m, n)
+    temp = a_star(map, [1, 1], [m - 1, 16], m, n)
 
     o = list()
     oo = list()
