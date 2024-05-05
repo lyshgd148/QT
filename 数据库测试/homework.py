@@ -29,6 +29,7 @@ import sqlite3
 coon = sqlite3.connect('./data/city.db')
 c = coon.cursor()
 distance_data_db = c.execute('''select * from city''')
+distance_data_db = distance_data_db.fetchall()
 coon.close()
 for i in distance_data_db:
     print(i)
