@@ -163,6 +163,13 @@ if __name__ == '__main__':
             4: 'SuZhou', 5: 'NanTong', 6: 'LianYunGang', 7: 'HuaiAn',
             8: 'YanCheng', 9: 'YangZhou', 10: 'ZhenJiang', 11: 'TaiZhou',
             12: 'SuQian'}
+    coordinate = {0: (88, 109.7), 1: (100.8, 138.8), 2: (39.2, 80.8), 3: (93.6, 132.1),
+                  4: (105.4, 143.9), 5: (90, 149.6), 6: (30, 117.7), 7: (54.3, 115.7),
+                  8: (58.7, 135.7), 9: (80.7, 121.2), 10: (85.6, 121.7), 11: (97.1, 131.3),
+                  12: (44.5, 99.7)}
+
+    x = list()
+    y = list()
 
     num_ants = 20
     rou_p = 0.3
@@ -173,5 +180,21 @@ if __name__ == '__main__':
     sign_density = [[1 if i != j else 0 for j in range(len(distance_data[0]))] for i in range(len(distance_data))]
     ants = Ants_alorithm(distance_data, sign_density, rou_p, Q, a, b, iter_num, num_ants)
     ants.main()
+
     for i in ants.way:
+        x.append(coordinate[i][1])
+        y.append(108 - coordinate[i][0])
         print(city[i], end='->')
+    for i in ants.way:
+        plt.text(coordinate[i][1] - 1, 108 - coordinate[i][0] + 1, city[i], fontsize=8)
+
+    ax = plt.gca()
+    ax.set_aspect(1)
+    plt.xlim(75, 155)
+    plt.ylim(-5, 85)
+    plt.scatter(x, y)
+    for i in range(len(coordinate)):
+        plt.plot(x[i:i + 2], y[i:i + 2])
+        plt.pause(0.5)
+
+    plt.show()
