@@ -158,7 +158,7 @@ class Ants_alorithm:
 if __name__ == '__main__':
     import sys
 
-    sys.setrecursionlimit(20000)  # 限制递归次数
+    sys.setrecursionlimit(5000)  # 限制递归次数
     city = {0: 'NanJing', 1: 'WuXi', 2: 'XuZhou', 3: 'ChangZhou',
             4: 'SuZhou', 5: 'NanTong', 6: 'LianYunGang', 7: 'HuaiAn',
             8: 'YanCheng', 9: 'YangZhou', 10: 'ZhenJiang', 11: 'TaiZhou',
@@ -176,7 +176,7 @@ if __name__ == '__main__':
     Q = 15
     a = 1
     b = 5
-    iter_num = 2000
+    iter_num = 1000
     sign_density = [[1 if i != j else 0 for j in range(len(distance_data[0]))] for i in range(len(distance_data))]
     ants = Ants_alorithm(distance_data, sign_density, rou_p, Q, a, b, iter_num, num_ants)
     ants.main()
@@ -195,6 +195,6 @@ if __name__ == '__main__':
     plt.scatter(x, y)
     for i in range(len(coordinate)):
         plt.plot(x[i:i + 2], y[i:i + 2])
-        plt.pause(0.5)
+        plt.pause(0.9)
 
     plt.show()
