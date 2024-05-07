@@ -93,6 +93,7 @@ class Ants_alorithm:
         length = self.data[i][index]
         return index, length
 
+    # 一只蚂蚁连续行走，走完全部路径
     def continue_walk(self, index):
         table = list()
         table.append(index)
@@ -106,6 +107,7 @@ class Ants_alorithm:
         length += self.data[index][table[0]]
         return table, length
 
+    # 多只蚂蚁一起行走
     def multi_continue_walk(self):  # num_ants 蚂蚁的数量
         num_ants_index = self.inint_(self.num_ants)
         table = list()
@@ -116,6 +118,7 @@ class Ants_alorithm:
             length.append(temp[1])
         return table, length
 
+    # 更新信息素浓度
     def renew_sign_density(self, table, length):
         row = len(self.sign_density)
         col = len(self.sign_density[0])
@@ -133,6 +136,7 @@ class Ants_alorithm:
                 self.sign_density[table[i][j - 1]][table[i][j]] += deta_density[i]
                 self.sign_density[table[i][j]][table[i][j - 1]] += deta_density[i]
 
+    # 进行多次迭代
     def iterate(self, all_sum=0):
         all_sum += 1
         if all_sum <= self.iter_num:
@@ -151,6 +155,7 @@ class Ants_alorithm:
         else:
             return self.num, self.way
 
+    # 输出最后结果
     def main(self):
         print(self.iterate())
 
