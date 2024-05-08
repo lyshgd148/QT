@@ -16,5 +16,5 @@ plt.contour(X, Y, Z, [0], colors='r')  # 绘制隐函数曲线
 plt.axis('equal')
 plt.xlabel('x')
 plt.ylabel('y')
-# plt.grid(True)
+
 plt.show()
