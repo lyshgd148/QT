@@ -9,13 +9,13 @@ def implicit_function(x, y):
     return 4 * y ** 2 - b * x ** 2 - y  # 这个隐函数还是有意思的
 
 
-x = np.linspace(0, 5, 1000)
-y = np.linspace(0, 5, 1000)
+x = np.linspace(0, 5, 10000)
+y = np.linspace(0, 5, 10000)
 X, Y = np.meshgrid(x, y)
 
 Z = implicit_function(X, Y)
 
-plt.contour(X, Y, Z, [-10, -5, -1, 0, 1, 5, 10], colors='black', linestyles='solid')  # 绘制隐函数曲线
+plt.contour(X, Y, Z, [-10, -5, -1,-0.001, 0, 1, 5, 10], colors='black', linestyles='solid')  # 绘制隐函数曲线
 plt.text(1.66, 2.25, 'k>0', fontsize=12)
 plt.text(0.184, 0.175, 'k=0', fontsize=12)
 plt.text(3.47, 0.44, 'k<0', fontsize=12)
@@ -35,7 +35,7 @@ plt.xlim(0.1, 5)
 plt.ylim(0.1, 4)
 plt.xlabel('x(t)')
 plt.ylabel('y(t)')
-plt.xticks([])
-plt.yticks([])
+# plt.xticks([])
+# plt.yticks([])
 # plt.grid(True)
 plt.show()
