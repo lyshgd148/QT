@@ -4,8 +4,6 @@ import numpy as np
 import json
 import serial
 
-
-
 # 可以再往多线程上面想想，但现在我要完成任务，就这样吧！
 flag = 0
 ser = serial.Serial('COM4', 9600)
@@ -34,6 +32,8 @@ ser.close()
 
 with open("band.json", "r") as f:
     data_o = json.load(f)
+
+
 def data_process(o_data):
     data_new = list()
     result = [o_data[i:i + 8] for i in range(0, len(o_data), 8)]
@@ -53,6 +53,8 @@ result = data_process(data_original)
 print(result)
 
 result_ = [result[i:i + 100] for i in range(0, len(result), 100)]
+if len(result_[-1]) < 100:
+    result_ = result_[1:-2]
 result_ = np.array(result_)
 result_ = result_.astype(np.uint8)
 
