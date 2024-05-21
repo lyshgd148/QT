@@ -3,7 +3,7 @@ import numpy as np
 import cv2
 import math
 
-learn_rate = 0.01
+learn_rate = 0.025
 w_1 = np.random.uniform(-np.sqrt(6 / 800), np.sqrt(6 / 800), size=(784, 16))
 u = np.zeros(16)
 b_1 = np.array([0 for _ in range(16)])
@@ -132,8 +132,14 @@ if __name__ == "__main__":
                          3: 20679 - 100, 4: 25538 - 100, 5: 30044 - 100,
                          6: 34995 - 100, 7: 40170 - 100, 8: 45012 - 100,
                          9: 50000 - 100}
+    picture_test_end = {0: 4932, 1: 10610, 2: 15578,
+                        3: 20679, 4: 25538, 5: 30044,
+                        6: 34995, 7: 40170, 8: 45012,
+                        9: 50000}
+    right = 0
+    time = 0
 
-    for i in range(50000 - 1000):
+    for i in range(55780):
         num = i % 10
         if picture_train_start[num] <= picture_train_end[num]:
             data = get_data(f'./picture/{num}/{picture_train_start[num]}.jpg')
@@ -155,7 +161,38 @@ if __name__ == "__main__":
             w_3 = w_3 - learn_rate * w_3_new
             w_2 = w_2 - learn_rate * w_2_new
             w_1 = w_1 - learn_rate * w_1_new
+            time += 1
+            print(f"第——{time}——轮训练")
 
-    # with open('./data.json', 'w') as f:
-    #     hh=w_1_new.tolist()
-    #     json.dump(hh,f)
+    for i in range(1000):
+        num = i % 10
+        if picture_train_start[num] <= picture_test_end[num]:
+            data = get_data(f'./picture/verification/{picture_train_start[num]}.jpg')
+            picture_train_start[num] += 1
+            get_u(data, w_1)
+            get_v(u, w_2)
+            get_y(v, w_3)
+            index = np.argmax(y)
+            if index == num:
+                right += 1
+
+    print(f'准确率:{right / 1000}')
+
+    with open('./w_1.json', 'w') as f:
+        hh = w_1.tolist()
+        json.dump(hh, f)
+    with open('./w_2.json', 'w') as f:
+        hh = w_2.tolist()
+        json.dump(hh, f)
+    with open('./w_3.json', 'w') as f:
+        hh = w_3.tolist()
+        json.dump(hh, f)
+    with open('./b_1.json', 'w') as f:
+        hh = b_1.tolist()
+        json.dump(hh, f)
+    with open('./b_2.json', 'w') as f:
+        hh = b_2.tolist()
+        json.dump(hh, f)
+    with open('./b_3.json', 'w') as f:
+        hh = b_3.tolist()
+        json.dump(hh, f)
