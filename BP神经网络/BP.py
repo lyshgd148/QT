@@ -73,10 +73,11 @@ def get_y(v_, w):
 
 
 if __name__ == "__main__":
-    # data = get_data('./picture/verification/10511.jpg')
-    data = get_data('./8.jpg')
+    # data = get_data('./picture/verification/34929.jpg')
+    data = get_data('9.jpg')
     get_u(data, w_1)
     get_v(u, w_2)
     get_y(v, w_3)
+    print(y)
     index = np.argmax(y)
     print(f'图片是{index}')
