@@ -1,11 +1,7 @@
+import json
 import numpy as np
 import cv2
 import math
-
-picture_data = {0: 4932 - 100, 1: 10610 - 100, 2: 15578 - 100,
-                3: 20679 - 100, 4: 25538 - 100, 5: 30044 - 100,
-                6: 34995 - 100, 7: 40170 - 100, 8: 45012 - 100,
-                9: 50000 - 100}
 
 learn_rate = 0.01
 w_1 = np.random.uniform(-np.sqrt(6 / 800), np.sqrt(6 / 800), size=(784, 16))
@@ -71,17 +67,20 @@ def renew_b_3(y_real):
     b_3_new = 2 * (y - y_real) * y * (1 - y)
 
 
-def renew_w_3(v_):
+def renew_w_3():
     global w_3_new
-    vec16x1 = np.reshape(v_, (16, 1))
+    vec16x1 = np.reshape(v, (16, 1))
     vec1x10 = np.reshape(b_3_new, (1, 10))
     w_3_new = np.dot(vec16x1, vec1x10)
 
 
-def renew_b_2(v_):
-    global b_2_new
-    v_matrix = [[v_[i] * (1 - v_[i]) if i == j else 0 for j in range(16)] for i in range(16)]
-    v_matrix = np.array(v_matrix)
+v_matrix = np.zeros((16, 16))
+
+
+def renew_b_2():
+    global b_2_new, v_matrix
+    temp = [[v[i] * (1 - v[i]) if i == j else 0 for j in range(16)] for i in range(16)]
+    v_matrix = np.array(temp)
     temp = np.dot(v_matrix, w_3)
     vec10x1 = np.reshape(b_3_new, (10, 1))
     temp = np.dot(temp, vec10x1)
@@ -89,16 +88,74 @@ def renew_b_2(v_):
 
 
 def renew_w_2():
-    pass
+    global w_2_new
+    vec16x1 = np.reshape(u, (16, 1))
+    vec1x10 = np.reshape(b_3_new, (1, 10))
+    vec16x16 = np.transpose(w_3)
+    temp = np.dot(vec16x1, vec1x10)
+    temp = np.dot(temp, vec16x16)
+    temp = np.dot(temp, v_matrix)
+    w_2_new = np.reshape(temp, (16, 16))
 
 
-data = get_data('./picture/0/1.jpg')
-get_u(data, w_1)
-get_v(u, w_2)
-get_y(v, w_3)
-# print(u, v, y)
-renew_b_3(np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]))
-renew_w_3(v)
-# print(w_3_new.shape)
-renew_b_2(v)
-# print(b_2_new, b_2_new.shape)
+u_matrix = np.zeros((16, 16))
+
+
+def renew_b_1():
+    global b_1_new, u_matrix
+    temp = [[u[i] * (1 - u[i]) if i == j else 0 for j in range(16)] for i in range(16)]
+    u_matrix = np.array(temp)
+    vec1x10 = np.reshape(b_3_new, (1, 10))
+    vec16x16_1 = np.transpose(w_3)
+    vec16x16_2 = np.transpose(w_2)
+    temp = np.dot(vec1x10, vec16x16_1)
+    temp = np.dot(temp, v_matrix)
+    temp = np.dot(temp, vec16x16_2)
+    temp = np.dot(temp, u_matrix)
+    b_1_new = np.reshape(temp, 16)
+
+
+def renew_w_1(data_):
+    global w_1_new
+    vec784x1 = np.reshape(data_, (784, 1))
+    vec1x16 = np.reshape(b_1_new, (1, 16))
+    temp = np.dot(vec784x1, vec1x16)
+    w_1_new = temp
+
+
+if __name__ == "__main__":
+    picture_train_start = {0: 1, 1: 4933, 2: 10611,
+                           3: 15579, 4: 20680, 5: 25539,
+                           6: 30045, 7: 34996, 8: 40171,
+                           9: 45013}
+    picture_train_end = {0: 4932 - 100, 1: 10610 - 100, 2: 15578 - 100,
+                         3: 20679 - 100, 4: 25538 - 100, 5: 30044 - 100,
+                         6: 34995 - 100, 7: 40170 - 100, 8: 45012 - 100,
+                         9: 50000 - 100}
+
+    for i in range(50000 - 1000):
+        num = i % 10
+        if picture_train_start[num] <= picture_train_end[num]:
+            data = get_data(f'./picture/{num}/{picture_train_start[num]}.jpg')
+            picture_train_start[num] += 1
+
+            y_real = np.array([0.99 if j == num else 0.01 for j in range(10)])
+            get_u(data, w_1)
+            get_v(u, w_2)
+            get_y(v, w_3)
+            renew_b_3(y_real)
+            renew_w_3()
+            renew_b_2()
+            renew_w_2()
+            renew_b_1()
+            renew_w_1(data)
+            b_3 = b_3 - learn_rate * b_3_new
+            b_2 = b_2 - learn_rate * b_2_new
+            b_1 = b_1 - learn_rate * b_1_new
+            w_3 = w_3 - learn_rate * w_3_new
+            w_2 = w_2 - learn_rate * w_2_new
+            w_1 = w_1 - learn_rate * w_1_new
+
+    # with open('./data.json', 'w') as f:
+    #     hh=w_1_new.tolist()
+    #     json.dump(hh,f)
