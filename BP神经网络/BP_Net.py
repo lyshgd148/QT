@@ -2,8 +2,9 @@ import json
 import numpy as np
 import cv2
 import math
+import matplotlib.pyplot as plt
 
-learn_rate = 0.025
+learn_rate = 0.1
 w_1 = np.random.uniform(-np.sqrt(6 / 800), np.sqrt(6 / 800), size=(784, 16))
 u = np.zeros(16)
 b_1 = np.array([0 for _ in range(16)])
@@ -138,6 +139,7 @@ if __name__ == "__main__":
                         9: 50000}
     right = 0
     time = 0
+    loss = list()
 
     for i in range(55780):
         num = i % 10
@@ -145,7 +147,7 @@ if __name__ == "__main__":
             data = get_data(f'./picture/{num}/{picture_train_start[num]}.jpg')
             picture_train_start[num] += 1
 
-            y_real = np.array([0.99 if j == num else 0.01 for j in range(10)])
+            y_real = np.array([0.999 if j == num else 0.001 for j in range(10)])
             get_u(data, w_1)
             get_v(u, w_2)
             get_y(v, w_3)
@@ -161,6 +163,9 @@ if __name__ == "__main__":
             w_3 = w_3 - learn_rate * w_3_new
             w_2 = w_2 - learn_rate * w_2_new
             w_1 = w_1 - learn_rate * w_1_new
+
+            tt = np.sum((y - y_real) ** 2)
+            loss.append(tt)
             time += 1
             print(f"第——{time}——轮训练")
 
@@ -174,6 +179,7 @@ if __name__ == "__main__":
             get_y(v, w_3)
             index = np.argmax(y)
             if index == num:
+                print(f"{picture_train_start[num]}.jpg",num)
                 right += 1
 
     print(f'准确率:{right / 1000}')
@@ -196,3 +202,6 @@ if __name__ == "__main__":
     with open('./b_3.json', 'w') as f:
         hh = b_3.tolist()
         json.dump(hh, f)
+
+    plt.plot(np.arange(1, 49001), loss)
+    plt.show()
