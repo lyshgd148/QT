@@ -1,12 +1,12 @@
 import cv2
 import numpy as np
 
-path = "0.jpg"
+path = "9.jpg"
 image = cv2.imread(path)
 image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 image = cv2.cvtColor(image, cv2.COLOR_GRAY2BGR)
-# kernel = np.ones((3, 3), np.uint8)
-# eroded_image = cv2.erode(image, kernel, iterations=1)
+kernel = np.ones((2, 2), np.uint8)
+image = cv2.dilate(image, kernel, iterations=1)
 cv2.imwrite(path, image)
 print(image.shape)
 

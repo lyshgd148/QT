@@ -4,7 +4,7 @@ import cv2
 import math
 import matplotlib.pyplot as plt
 
-learn_rate = 0.05
+learn_rate = 0.015
 w_1 = np.random.uniform(-np.sqrt(6 / 800), np.sqrt(6 / 800), size=(784, 16))
 u = np.zeros(16)
 b_1 = np.array([0 for _ in range(16)])
@@ -129,10 +129,15 @@ if __name__ == "__main__":
                            3: 15579, 4: 20680, 5: 25539,
                            6: 30045, 7: 34996, 8: 40171,
                            9: 45013}
-    picture_train_end = {0: 4932 - 100, 1: 10610 - 100, 2: 15578 - 100,
-                         3: 20679 - 100, 4: 25538 - 100, 5: 30044 - 100,
-                         6: 34995 - 100, 7: 40170 - 100, 8: 45012 - 100,
-                         9: 50000 - 100}
+    picture_train_end = {0: 1 + 4000, 1: 4933 + 4000, 2: 10611 + 4000,
+                         3: 15579 + 4000, 4: 20680 + 4000, 5: 25539 + 4000,
+                         6: 30045 + 4000, 7: 34996 + 4000, 8: 40171 + 4000,
+                         9: 45013 + 4000}
+
+    picture_test_start = {0: 4932 - 99, 1: 10610 - 99, 2: 15578 - 99,
+                          3: 20679 - 99, 4: 25538 - 99, 5: 30044 - 99,
+                          6: 34995 - 99, 7: 40170 - 99, 8: 45012 - 99,
+                          9: 50000 - 99}
     picture_test_end = {0: 4932, 1: 10610, 2: 15578,
                         3: 20679, 4: 25538, 5: 30044,
                         6: 34995, 7: 40170, 8: 45012,
@@ -141,7 +146,7 @@ if __name__ == "__main__":
     time = 0
     loss = list()
 
-    for i in range(55780):
+    for i in range(41000):
         num = i % 10
         if picture_train_start[num] <= picture_train_end[num]:
             data = get_data(f'./picture/{num}/{picture_train_start[num]}.jpg')
@@ -171,15 +176,15 @@ if __name__ == "__main__":
 
     for i in range(1000):
         num = i % 10
-        if picture_train_start[num] <= picture_test_end[num]:
-            data = get_data(f'./picture/verification/{picture_train_start[num]}.jpg')
-            picture_train_start[num] += 1
+        if picture_test_start[num] <= picture_test_end[num]:
+            data = get_data(f'./picture/verification/{picture_test_start[num]}.jpg')
+            picture_test_start[num] += 1
             get_u(data, w_1)
             get_v(u, w_2)
             get_y(v, w_3)
             index = np.argmax(y)
             if index == num:
-                print(f"{picture_train_start[num]}.jpg",num)
+                print(f"{picture_train_start[num]}.jpg", num)
                 right += 1
 
     print(f'准确率:{right / 1000}')
@@ -203,5 +208,5 @@ if __name__ == "__main__":
         hh = b_3.tolist()
         json.dump(hh, f)
 
-    plt.plot(np.arange(1, 49001), loss)
+    plt.plot(np.arange(1, 40011), loss)
     plt.show()
