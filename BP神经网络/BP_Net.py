@@ -4,7 +4,7 @@ import cv2
 import math
 import matplotlib.pyplot as plt
 
-learn_rate = 0.015
+learn_rate = 0.055
 w_1 = np.random.uniform(-np.sqrt(6 / 800), np.sqrt(6 / 800), size=(784, 16))
 u = np.zeros(16)
 b_1 = np.array([0 for _ in range(16)])
