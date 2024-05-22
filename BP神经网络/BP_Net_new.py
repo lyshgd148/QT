@@ -5,7 +5,7 @@ import cv2
 import math
 import matplotlib.pyplot as plt
 
-learn_rate = 0.055
+learn_rate = 0.3
 w_1 = np.random.uniform(-np.sqrt(6 / 800), np.sqrt(6 / 800), size=(784, 16))
 u = np.zeros(16)
 b_1 = np.array([0 for _ in range(16)])
@@ -126,6 +126,13 @@ def renew_w_1(data_):
 
 
 if __name__ == "__main__":
+    w_1_all = 0
+    b_1_all = 0
+    w_2_all = 0
+    b_2_all = 0
+    w_3_all = 0
+    b_3_all = 0
+    y_all = 0
     picture_train_start = {0: 1, 1: 4933, 2: 10611,
                            3: 15579, 4: 20680, 5: 25539,
                            6: 30045, 7: 34996, 8: 40171,
@@ -134,10 +141,10 @@ if __name__ == "__main__":
                             3: 15579, 4: 20680, 5: 25539,
                             6: 30045, 7: 34996, 8: 40171,
                             9: 45013}
-    picture_train_end = {0: 1 + 4000, 1: 4933 + 4000, 2: 10611 + 4000,
-                         3: 15579 + 4000, 4: 20680 + 4000, 5: 25539 + 4000,
-                         6: 30045 + 4000, 7: 34996 + 4000, 8: 40171 + 4000,
-                         9: 45013 + 4000}
+    picture_train_end = {0: 1 + 2000, 1: 4933 + 2000, 2: 10611 + 2000,
+                         3: 15579 + 2000, 4: 20680 + 2000, 5: 25539 + 2000,
+                         6: 30045 + 2000, 7: 34996 + 2000, 8: 40171 + 2000,
+                         9: 45013 + 2000}
 
     picture_test_start = {0: 4932 - 99, 1: 10610 - 99, 2: 15578 - 99,
                           3: 20679 - 99, 4: 25538 - 99, 5: 30044 - 99,
@@ -151,9 +158,9 @@ if __name__ == "__main__":
     time = 0
     loss = list()
 
-    for j in range(10):
+    for j in range(10000):
         picture_train_start = copy.deepcopy(picture_train_start_)
-        for i in range(41000):
+        for i in range(20010):
             num = i % 10
             if picture_train_start[num] <= picture_train_end[num]:
                 data = get_data(f'./picture/{num}/{picture_train_start[num]}.jpg')
@@ -169,17 +176,31 @@ if __name__ == "__main__":
                 renew_w_2()
                 renew_b_1()
                 renew_w_1(data)
-                b_3 = b_3 - learn_rate * b_3_new
-                b_2 = b_2 - learn_rate * b_2_new
-                b_1 = b_1 - learn_rate * b_1_new
-                w_3 = w_3 - learn_rate * w_3_new
-                w_2 = w_2 - learn_rate * w_2_new
-                w_1 = w_1 - learn_rate * w_1_new
+                w_1_all += w_1_new
+                b_1_all += b_1_new
+                w_2_all += w_2_new
+                b_2_all += b_2_new
+                w_3_all += w_3_new
+                b_3_all += b_3_new
+                y_all += np.sum((y - y_real) ** 2)
 
-                tt = np.sum((y - y_real) ** 2)
-                loss.append(tt)
-                time += 1
-                print(f"第——{time}——轮训练")
+        b_3 = b_3 - learn_rate * b_3_all / 20010
+        b_2 = b_2 - learn_rate * b_2_all / 20010
+        b_1 = b_1 - learn_rate * b_1_all / 20010
+        w_3 = w_3 - learn_rate * w_3_all / 20010
+        w_2 = w_2 - learn_rate * w_2_all / 20010
+        w_1 = w_1 - learn_rate * w_1_all / 20010
+        loss.append(y_all)
+        w_1_all = 0
+        b_1_all = 0
+        w_2_all = 0
+        b_2_all = 0
+        w_3_all = 0
+        b_3_all = 0
+        y_all = 0
+
+        time += 1
+        print(f"第——{time}——轮训练")
 
     for i in range(1000):
         num = i % 10
@@ -215,5 +236,5 @@ if __name__ == "__main__":
         hh = b_3.tolist()
         json.dump(hh, f)
 
-    plt.plot(np.arange(1, 40010 * 10 + 1), loss)
+    plt.plot(np.arange(1, time + 1), loss)
     plt.show()
