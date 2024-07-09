@@ -12,6 +12,7 @@ def Compress(channel, percent):
         if float(k) / len(s) > percent:
             rechannel[rechannel < 0] = 0
             rechannel[rechannel > 255] = 255
+            break
     return np.rint(rechannel).astype("uint8")
 
 
