@@ -1,5 +1,4 @@
 # 一维柏林噪声
-
 import matplotlib.pyplot as plt
 import numpy as np
 import math
@@ -35,11 +34,17 @@ def Onev_perlin(x):
 
 
 x = np.linspace(0, 10, 1001)
-y = list()
+y = np.zeros(1001)
+z = list()
 for i in range(len(x)):
-    y.append(Onev_perlin(x[i]))
-plt.figure()
-plt.plot(x, y)
-plt.axis('equal')
-plt.grid()
+    z.append(Onev_perlin(x[i]))
+
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+
+ax.scatter(x, y, z, c='r', marker='o',s=5)
+ax.set_xlabel('X')
+ax.set_ylabel('Y')
+ax.set_zlabel('Z')
+plt.title('3D Scatter Plot')
 plt.show()
