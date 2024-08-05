@@ -42,7 +42,7 @@ for i in range(len(x)):
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
 
-ax.scatter(x, y, z, c='r', marker='o',s=5)
+ax.scatter(x, y, z, c='r', marker='o', s=5)
 ax.set_xlabel('X')
 ax.set_ylabel('Y')
 ax.set_zlabel('Z')
