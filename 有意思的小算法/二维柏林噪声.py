@@ -1,4 +1,7 @@
 import math as m
+import matplotlib.pyplot as plt
+import numpy as np
+from mpl_toolkits.mplot3d import Axes3D
 
 
 def grad(x, y):  # 随机生成梯度函数
@@ -62,3 +65,35 @@ def perlin(x, y):
     t = 6 * (y - p0y) ** 5 - 15 * (y - p0y) ** 4 + 10 * (y - p0y) ** 3
     n1 = n1 * (1 - t) + n0 * t
     return n1
+
+
+def mapping(lst):
+    return [255 * (x + 1) / 2 for x in lst]
+
+
+size = 1024
+
+x = np.linspace(0, 8, size)
+y = np.linspace(0, 8, size)
+X, Y = np.meshgrid(x, y)
+Z = list()
+ls = list()
+for i in range(size):
+    ls = []
+    for j in range(size):
+        ls.append(perlin(x[j], y[i]))
+    Z.append(ls)
+Z = list(map(mapping, Z))
+Z = np.array(Z)
+
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+# surf = ax.plot_surface(X, Y, Z, cmap='viridis', rstride=8, cstride=8)
+surf = ax.plot_surface(X, Y, Z, cmap='viridis')
+ax.set_xlabel('X')
+ax.set_ylabel('Y')
+ax.set_zlabel('Z')
+ax.set_xticks([])
+ax.set_yticks([])
+ax.set_zticks([])
+plt.show()
