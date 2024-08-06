@@ -8,7 +8,7 @@ def Cum_NUm(n):
     return num
 
 
-end = 1000
+end = 10000
 num = list()
 
 import matplotlib.pyplot as plt
