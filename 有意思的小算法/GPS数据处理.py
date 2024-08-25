@@ -3,4 +3,6 @@ import pandas as pd
 
 data = pd.read_excel('./GPS.xlsx')
 
-print(data)
+time=data[data.columns[0]]
+
+print(time[0])
