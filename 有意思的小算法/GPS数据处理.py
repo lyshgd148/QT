@@ -25,6 +25,7 @@ for i in range(len(time)):
 length=list()
 for i in range(1,len(x)):
     cos_theta=(x[i]*x[i-1]+y[i]*y[i-1]+z[i]*z[i-1])/math.sqrt((x[i]**2+y[i]**2+z[i]**2)*(x[i-1]**2+y[i-1]**2+z[i-1]**2))
+
     length.append(math.sqrt(1-cos_theta**2)*r*1000)
 
 print(length)
