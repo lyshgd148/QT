@@ -43,9 +43,13 @@ def draw(x, y, z):
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
     ax.plot(x, y, z)
-    ax.set_xticks([])
-    ax.set_yticks([])
-    ax.set_zticks([])
+    ax.scatter(0, 0, 0, c='red', marker='o')
+    # ax.set_xticks([])
+    # ax.set_yticks([])
+    # ax.set_zticks([])
+    ax.set_xlabel('x')
+    ax.set_ylabel('y')
+    ax.set_zlabel('z')
     plt.show()
 
 
