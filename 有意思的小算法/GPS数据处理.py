@@ -31,8 +31,14 @@ for i in range(1, len(x)):
     length = theta * r * 1000
     long += length
     l = math.sqrt((longitude[i] - longitude[i - 1]) ** 2 + (latitude[i] - latitude[i - 1]) ** 2)
-    x_.append((longitude[i] - longitude[i - 1]) / l * length)
-    y_.append((latitude[i] - latitude[i - 1]) / l * length)
+    try:
+        x_.append((longitude[i] - longitude[i - 1]) / l * length)
+    except Exception:
+        x_.append(0)
+    try:
+        y_.append((latitude[i] - latitude[i - 1]) / l * length)
+    except Exception:
+        y_.append(0)
     sum_x = 0
     sum_y = 1
     for k in range(i):
