@@ -60,6 +60,16 @@ def draw(x, y, z, long):
     ax.set_xlabel('x')
     ax.set_ylabel('y')
     ax.set_zlabel('z')
+    plt.plot(x, y)
+
+    plt.figure()
+    plt.plot(x, y)
+    plt.xlabel('x')
+    plt.ylabel('y')
+    plt.gca().set_aspect('equal', adjustable='datalim')  # 设置坐标轴比例为相等
+    plt.xticks([])
+    plt.yticks([])
+
     plt.show()
 
 
