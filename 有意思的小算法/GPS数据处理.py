@@ -26,7 +26,8 @@ y_ = list()
 for i in range(1, len(x)):
     cos_theta = (x[i] * x[i - 1] + y[i] * y[i - 1] + z[i] * z[i - 1]) / math.sqrt(
         (x[i] ** 2 + y[i] ** 2 + z[i] ** 2) * (x[i - 1] ** 2 + y[i - 1] ** 2 + z[i - 1] ** 2))
-    length = math.sqrt(1 - cos_theta ** 2) * r * 1000
+    theta=math.acos(cos_theta)
+    length = theta * r * 1000
     l = math.sqrt((longitude[i] - longitude[i - 1]) ** 2 + (latitude[i] - latitude[i - 1]) ** 2)
     x_.append((longitude[i] - longitude[i - 1]) / l * length)
     y_.append((latitude[i] - latitude[i - 1]) / l * length)
@@ -44,9 +45,9 @@ def draw(x, y, z):
     ax = fig.add_subplot(111, projection='3d')
     ax.plot(x, y, z)
     ax.scatter(0, 0, 0, c='red', marker='o')
-    # ax.set_xticks([])
-    # ax.set_yticks([])
-    # ax.set_zticks([])
+    ax.set_xticks([])
+    ax.set_yticks([])
+    ax.set_zticks([])
     ax.set_xlabel('x')
     ax.set_ylabel('y')
     ax.set_zlabel('z')
