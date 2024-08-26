@@ -1,3 +1,4 @@
+import matplotlib
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import pandas as pd
@@ -23,11 +24,13 @@ for i in range(len(time)):
 
 x_ = list()
 y_ = list()
+long = 0
 for i in range(1, len(x)):
     cos_theta = (x[i] * x[i - 1] + y[i] * y[i - 1] + z[i] * z[i - 1]) / math.sqrt(
         (x[i] ** 2 + y[i] ** 2 + z[i] ** 2) * (x[i - 1] ** 2 + y[i - 1] ** 2 + z[i - 1] ** 2))
-    theta=math.acos(cos_theta)
+    theta = math.acos(cos_theta)
     length = theta * r * 1000
+    long += length
     l = math.sqrt((longitude[i] - longitude[i - 1]) ** 2 + (latitude[i] - latitude[i - 1]) ** 2)
     x_.append((longitude[i] - longitude[i - 1]) / l * length)
     y_.append((latitude[i] - latitude[i - 1]) / l * length)
@@ -40,11 +43,12 @@ for i in range(1, len(x)):
     height.append(sum_y)
 
 
-def draw(x, y, z):
+def draw(x, y, z, long):
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
     ax.plot(x, y, z)
     ax.scatter(0, 0, 0, c='red', marker='o')
+    ax.text(0, 0, 0, r'$\text{all distance:} %d$' % long, fontsize=12, color='green')
     ax.set_xticks([])
     ax.set_yticks([])
     ax.set_zticks([])
@@ -54,4 +58,4 @@ def draw(x, y, z):
     plt.show()
 
 
-draw(width, height, altitude)
+draw(width, height, altitude, long)
