@@ -101,3 +101,4 @@ if __name__ == '__main__':
     # plt.plot(np.linspace(0, len(new_data) / RATE, num=len(new_data)), new_data)
 
     plt.show()
+
