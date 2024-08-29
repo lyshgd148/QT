@@ -9,7 +9,7 @@ def Collect_voice(name):
     CHANNELS = 1
     RATE = 44100
     CHUNK = 1024
-    RECORD_SECONDS = 1
+    RECORD_SECONDS = 6
 
     audio = pyaudio.PyAudio()
     print("Recording...")
@@ -40,7 +40,7 @@ def Collect_voice(name):
     return time, list_data
 
 
-def Play_void(name, RATE):
+def Play_voice(name, RATE):
     wav_file = wave.open(name, 'rb')
     p = pyaudio.PyAudio()
     # 打开音频流
@@ -82,14 +82,22 @@ def Date2voice(name, data):
 
 
 if __name__ == '__main__':
-    # time, data = Collect_voice('./sound/test.wav')
-    time1, data1 = Play_void('./sound/impulse.wav', 44100)
+    RATE = 44100
+    # time, kernel = Play_voice('./sound/impulse.wav', RATE)
+    time1, data1 = Play_voice('./sound/original.wav', RATE)
+    # kernel = kernel[:] / 100000
+    # new_data = np.convolve(data1, kernel, mode='valid')
+    # new_data = new_data.astype(np.int16)
+    # Date2voice('./sound/new_voice.wav', new_data)
+    time2, data2 = Play_voice('./sound/new_voice.wav', RATE)
 
     # plt.figure()
-    # plt.plot(time, data)
+    # plt.plot(time[:], kernel)
+    #
+    # plt.figure()
+    # plt.plot(time1, data1)
 
-    plt.figure()
-    plt.plot(time1, data1)
+    # plt.figure()
+    # plt.plot(np.linspace(0, len(new_data) / RATE, num=len(new_data)), new_data)
 
-    # Date2voice('./sound/impulse.wav', data1[28224:])
     plt.show()
