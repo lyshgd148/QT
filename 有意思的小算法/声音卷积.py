@@ -83,23 +83,21 @@ def Date2voice(name, data):
 
 if __name__ == '__main__':
     RATE = 44100
-    # time, kernel = Play_voice('./sound/impulse.wav', RATE)
+    time, kernel = Play_voice('./sound/impulse.wav', RATE)
     time1, data1 = Play_voice('./sound/original.wav', RATE)
-    # kernel = kernel[:] / 100000
-    # new_data = np.convolve(data1, kernel, mode='valid')
-    # new_data = new_data.astype(np.int16) #这一步太重要了，不然数据类型不对数据量会增加很多变成导致噪声！
-    # Date2voice('./sound/new_voice.wav', new_data)
+    kernel = kernel[:] / 100000
+    new_data = np.convolve(data1, kernel, mode='valid')
+    new_data = new_data.astype(np.int16)  # 这一步太重要了，不然数据类型不对数据量会增加很多变成导致噪声！
+    Date2voice('./sound/new_voice.wav', new_data)
     time2, data2 = Play_voice('./sound/new_voice.wav', RATE)
 
-    # plt.figure()
-    # plt.plot(time[:], kernel)
-    #
-    # plt.figure()
-    # plt.plot(time1, data1)
+    plt.figure()
+    plt.plot(time[:], kernel)
 
-    # plt.figure()
-    # plt.plot(np.linspace(0, len(new_data) / RATE, num=len(new_data)), new_data)
+    plt.figure()
+    plt.plot(time1, data1)
+
+    plt.figure()
+    plt.plot(np.linspace(0, len(new_data) / RATE, num=len(new_data)), new_data)
 
     plt.show()
-
-
