@@ -7,11 +7,19 @@ def f(x):
     return m.sin(x)
 
 
-def sample():
+def sample(f, a, b):
     pass
 
 
-def adaptive_sample():
+def simpson(f, a, b, n=1000):
+    pass
+
+
+def adaptive_simpson():
+    pass
+
+
+def draw():
     pass
 
 
