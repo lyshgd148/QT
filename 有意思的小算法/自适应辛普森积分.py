@@ -1,5 +1,10 @@
 import matplotlib.pyplot as plt
 import numpy as np
+import math as m
+
+
+def f(x):
+    return m.sin(x)
 
 
 def sample():
