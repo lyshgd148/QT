@@ -18,3 +18,28 @@ class Stack:
 
     def size(self):
         return len(self.items)
+
+
+class Stack1(list):
+
+    def isEmpty(self):
+        return self == []
+
+    def push(self, item):
+        self.append(item)
+
+    def peek(self):
+        return self[- 1]
+
+    def size(self):
+        return len(self)
+
+    def __repr__(self):
+        l = len(self) * 7
+        s = "|" + "-" * l + ")\n|"
+        for i in self:
+            s+="| %-5s" %i
+        s+="\n|"+"-"*l+")"
+        return  s
+
+
