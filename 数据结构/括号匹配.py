@@ -1,4 +1,4 @@
-from struct import Stack
+from struct_ import Stack
 
 
 def match(left, right):

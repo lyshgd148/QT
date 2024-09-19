@@ -1,4 +1,4 @@
-from struct import Stack
+from struct_ import Stack
 
 s = Stack()
 print(s.isEmpty())
