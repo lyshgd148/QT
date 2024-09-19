@@ -1,5 +1,4 @@
-# 定义栈
-
+# 栈
 class Stack:
     def __init__(self):
         self.items = []
@@ -43,6 +42,7 @@ class Stack1(list):
         return s
 
 
+# 队列
 class Queue:
     def __init__(self):
         self.items = []
@@ -83,6 +83,7 @@ class Deque:
         return len(self.items)
 
 
+# 结点
 class Node:
     def __init__(self, initdata):
         self.data = initdata
@@ -99,3 +100,110 @@ class Node:
 
     def setNext(self, newnext):
         self.next = newnext
+
+
+# 无序表
+class UnorderedList:
+    def __init__(self):
+        self.head = None
+
+    def add(self, item):
+        temp = Node(item)
+        temp.setNext(self.head)
+        self.head = temp
+
+    def size(self):
+        current = self.head
+        count = 0
+        while current != None:
+            count += 1
+            current = current.getNext()
+        return count
+
+    def search(self, item):
+        current = self.head
+        found = False
+        while current != None and not found:
+            if current.getData() == item:
+                found = True
+            else:
+                current = current.getNext()
+        return found
+
+    def remove(self, item):
+        current = self.head
+        previous = None
+        found = False
+        while not found:
+            if current.getData() == item:
+                found = True
+            else:
+                previous = current
+                current = current.getNext()
+
+        if previous == None:
+            self.head = current.getNext()
+        else:
+            previous.setNext(current.getNext())
+
+
+# 有序表
+class OrderedList:
+    def __init__(self):
+        self.head = None
+
+    def size(self):
+        current = self.head
+        count = 0
+        while current != None:
+            count += 1
+            current = current.getNext()
+        return count
+
+    def remove(self, item):
+        current = self.head
+        previous = None
+        found = False
+        while not found:
+            if current.getData() == item:
+                found = True
+            else:
+                previous = current
+                current = current.getNext()
+
+        if previous == None:
+            self.head = current.getNext()
+        else:
+            previous.setNext(current.getNext())
+
+    def search(self, item):
+        current = self.head
+        found = False
+        stop = False
+        while current != None and not found and not stop:
+            if current.getData() == item:
+                found = True
+            else:
+                if current.getData() > item:
+                    stop = True
+                else:
+                    current = current.getNext()
+        return found
+
+    def add(self, item):
+        current = self.head
+        previous = None
+        stop = False
+        while current != None and not stop:
+            if current.getData() > item:
+                stop = True
+            else:
+                previous = current
+                current = current.getNext()
+        temp = Node(item)
+        if previous == None:
+            temp.setNext(self.head)
+            self.head = temp
+        else:
+            temp.setNext(current)
+            previous.setNext(temp)
