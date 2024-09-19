@@ -1,4 +1,4 @@
-# 面向对象的好处就是可以模拟现实世界的运行
+# 面向对象的好处：可以模拟现实世界的运行
 
 from struct_ import Queue
 import random
