@@ -60,6 +60,7 @@ class Queue:
         return len(self.items)
 
 
+# 双端队列
 class Deque:
     def __init__(self):
         self.items = []
