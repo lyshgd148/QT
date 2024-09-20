@@ -43,8 +43,8 @@ class Task:
 
 
 def newPrintask():
-    num = random.randrange(1, 181)
-    if num == 180:
+    num = random.randrange(1, 61)
+    if num == 60:
         return True
     else:
         return False
@@ -69,4 +69,4 @@ def simulation(sec, ppm):
 
 
 for i in range(10):
-    simulation(3600, 10)
+    simulation(3600, 45)
