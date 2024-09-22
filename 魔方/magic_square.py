@@ -10,9 +10,10 @@ class magicSquare:
         self.back = [[4, 4, 4], [4, 4, 4], [4, 4, 4]]
         self.right = [[5, 5, 5], [5, 5, 5], [5, 5, 5]]
         self.down = [[6, 6, 6], [6, 6, 6], [6, 6, 6]]
+        self.ways = ['F', 'R', 'f', 'r', 'U', 'B', 'u', 'b', 'D', 'L', 'l', 'd']
 
     def resert(self):
-        # 还原魔方放
+        # 还原魔方
         self.face = [[1, 1, 1], [1, 1, 1], [1, 1, 1]]
         self.left = [[2, 2, 2], [2, 2, 2], [2, 2, 2]]
         self.up = [[3, 3, 3], [3, 3, 3], [3, 3, 3]]
@@ -207,8 +208,104 @@ class magicSquare:
         for i in range(3):
             self.R()
 
+    def turn(self, turns):
+        for i in turns:
+            if i == "F":
+                self.F()
+            elif i == "f":
+                self.f()
+            elif i == "U":
+                self.U()
+            elif i == "u":
+                self.u()
+            elif i == "D":
+                self.D()
+            elif i == "d":
+                self.d()
+            elif i == "B":
+                self.B()
+            elif i == "b":
+                self.b()
+            elif i == "R":
+                self.R()
+            elif i == "r":
+                self.r()
+            elif i == "L":
+                self.L()
+            elif i == "l":
+                self.l()
+
+    def inv_turn(self, turns):
+        temp = list()
+        for i in range(len(turns)):
+            temp.append(turns[i].swapcase())
+        self.turn(temp)
+
+    def check_x(self, color, standard):
+        # 检查顶面目标棱块是否为目标颜色
+        num = 0
+        if self.up[0][1] == color:
+            num += 1
+        if self.up[1][0] == color:
+            num += 1
+        if self.up[1][2] == color:
+            num += 1
+        if self.up[2][1] == color:
+            num += 1
+        if num == standard:
+            return True
+        else:
+            return False
+
+    def xcross(self, times, standard):
+        global x_sign
+
+        x_sign = self.check_x(6, standard)
+        if x_sign == True or times == 4:
+            return
+
+        for i in self.ways:
+            self.turn(i)
+            self.xcross(times + 1, standard)
+            if x_sign:
+                return
+            else:
+                self.inv_turn(i)
+
+    def Xcross(self):
+        for i in range(2, 5):
+            self.xcross(0, i)
+
+    def reDown(self):
+        # 让顶面十字回到底面
+        while self.face[0][1] != self.face[1][1] or self.up[2][1] != self.down[1][1]:
+            self.U()
+        self.F()
+        self.F()
+
+        while self.left[0][1] != self.left[1][1] or self.up[1][0] != self.down[1][1]:
+            self.U()
+        self.L()
+        self.L()
+
+        while self.right[0][1] != self.right[1][1] or self.up[1][2] != self.down[1][1]:
+            self.U()
+        self.R()
+        self.R()
+
+        while self.back[0][1] != self.back[1][1] or self.up[0][1] != self.down[1][1]:
+            self.U()
+        self.B()
+        self.B()
+
     def testRotate(self):
         dict = {1: "红", 2: "蓝", 3: "黄", 4: "橙", 5: "绿", 6: "白"}
+
+        # 顶面十字的测试，目前没问题！
+        self.turn(self.ways)
+        self.turn(['F', 'U', 'd', 'd'])
+        self.Xcross()
+        self.reDown()
 
         print('\n', "-f" * 30, '\n')
         for i in range(9):
