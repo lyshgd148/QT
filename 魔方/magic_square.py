@@ -308,34 +308,33 @@ class magicSquare:
                  ["R", "U", "r", "u"],
                  ["B", "U", "b", "u"],
                  ["L", "U", "l", "u"]]
-        jiaos = [[self.left[2][2], 2, self.down[0][0]],
-                 [self.right[2][0], 5, self.down[0][2]],
+        jiaos = [[self.face[2][0], 1, self.down[0][0]],
+                 [self.face[2][2], 1, self.down[0][2]],
                  [self.right[2][2], 5, self.down[2][2]],
-                 [self.back[2][2], 4, self.down[2][0]]]
+                 [self.left[2][0], 2, self.down[2][0]]]
 
-        print(self.corner)
         for index, value in enumerate(self.corner):
             if ls[0] in value and ls[1] in value and ls[2] in value:
-                if index > 4:
+                if index >= 4:
                     index = index - 4
                     self.turn(turns[index])
                 for j in range(len(indexs)):
                     if index == indexs[j]:
                         temp = index - num
                         if temp > 0:
-                            for i in range(temp):
+                            for _ in range(temp):
                                 self.U()
-                        else:
-                            for i in range(abs(temp)):
+                        elif temp < 0:
+                            for _ in range(abs(temp)):
                                 self.u()
                         break
+                self.getColor()
+                print(self.color)
                 while True:
                     if jiaos[num][0] == jiaos[num][1] and jiaos[num][2] == 6:
-                        print("@")
                         break
                     else:
                         self.turn(turns[num])
-                        print("*")
 
     def fullDown(self):
         # 将底面完全还原
@@ -349,6 +348,7 @@ class magicSquare:
                    [0, 1, 2]]
         for i in range(4):
             self.fourDCorner(ls_[i], indexs_[i], i)
+            print(i)
 
     def testRotate(self):
         dict = {1: "红", 2: "蓝", 3: "黄", 4: "橙", 5: "绿", 6: "白"}
@@ -357,16 +357,16 @@ class magicSquare:
         # self.L()
 
         # 连续转动
-        self.turn(['F', 'R', 'f', 'r', 'U', "L", "D"])  # 我c你妈，这个有一个错了就得调半天！
-        self.getColor()
-        print(self.color)
+        # self.turn(['F', 'R', 'f', 'r', 'U', "L", "B","D"])  # 我c你妈，这个有一个错了就得调半天！
+        # self.getColor()
+        # print(self.color)
 
         # 顶面十字的测试，目前没问题！
         # self.turn(self.ways)
-        # self.turn(['F', 'U', 'd', 'd'])
-        # self.Xcross()
-        # self.reDown()
-        # self.fullDown()
+        self.turn(['F', 'R', 'f', 'r', 'U', "L", "B", "D"])
+        self.Xcross()
+        self.reDown()
+        self.fullDown()
 
         print('\n', "-f" * 30, '\n')
         for i in range(9):
