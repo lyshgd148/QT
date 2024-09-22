@@ -298,6 +298,56 @@ class magicSquare:
         self.B()
         self.B()
 
+    def fourDCorner(self, ls, indexs, num):
+        """
+        :param indexs:不在此角处的可能值
+        :para num:角号
+        """
+        self.getCorner()
+        turns = [["F", "U", "f", "u"],
+                 ["R", "U", "r", "u"],
+                 ["B", "U", "b", "u"],
+                 ["L", "U", "l", "u"]]
+        jiaos = [[self.left[2][0], 2, self.face[2][0], 1],
+                 [self.right[2][0], 5, self.face[2][2], 1],
+                 [self.right[2][2], 5, self.back[2][0], 4],
+                 [self.back[2][2], 4, self.left[2][0], 2]]
+        cor1 = ls[0]
+        cor2 = ls[1]
+        cor3 = ls[2]
+        for index, value in enumerate(self.corner):
+            if cor1 in value and cor2 in value and cor3 in value:
+                if index > 4:
+                    index = index - 4
+                    self.turn(turns[index])
+                for j in range(len(indexs)):
+                    if index == indexs[j]:
+                        temp = index - num
+                        if temp > 0:
+                            for i in range(temp):
+                                self.U()
+                        else:
+                            for i in range(abs(temp)):
+                                self.u()
+                while True:
+                    if jiaos[num][0] == jiaos[num][1] and jiaos[num][2] == jiaos[num][3]:
+                        break
+                    else:
+                        self.turn(turns[num])
+
+    def fullDown(self):
+        # 将底面完全还原
+        ls = [[1, 2, 6],
+              [1, 5, 6],
+              [4, 5, 6],
+              [4, 2, 6]]
+        indexs = [[1, 2, 3],
+                  [0, 2, 3],
+                  [0, 1, 3],
+                  [0, 1, 2]]
+        for i in range(4):
+            self.fourDCorner(ls[i], indexs[i], i)
+
     def testRotate(self):
         dict = {1: "红", 2: "蓝", 3: "黄", 4: "橙", 5: "绿", 6: "白"}
 
@@ -306,6 +356,7 @@ class magicSquare:
         self.turn(['F', 'U', 'd', 'd'])
         self.Xcross()
         self.reDown()
+        self.fullDown()
 
         print('\n', "-f" * 30, '\n')
         for i in range(9):
