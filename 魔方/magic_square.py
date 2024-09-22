@@ -328,13 +328,17 @@ class magicSquare:
                             for _ in range(abs(temp)):
                                 self.u()
                         break
-                self.getColor()
-                print(self.color)
+                # self.getColor()
+                # print(self.color)
                 while True:
                     if jiaos[num][0] == jiaos[num][1] and jiaos[num][2] == 6:
                         break
                     else:
                         self.turn(turns[num])
+                        jiaos = [[self.face[2][0], 1, self.down[0][0]],
+                                 [self.face[2][2], 1, self.down[0][2]],
+                                 [self.right[2][2], 5, self.down[2][2]],
+                                 [self.left[2][0], 2, self.down[2][0]]]
 
     def fullDown(self):
         # 将底面完全还原
@@ -348,7 +352,6 @@ class magicSquare:
                    [0, 1, 2]]
         for i in range(4):
             self.fourDCorner(ls_[i], indexs_[i], i)
-            print(i)
 
     def testRotate(self):
         dict = {1: "红", 2: "蓝", 3: "黄", 4: "橙", 5: "绿", 6: "白"}
