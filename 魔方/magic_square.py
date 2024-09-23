@@ -11,6 +11,20 @@ class magicSquare:
         self.right = [[5, 5, 5], [5, 5, 5], [5, 5, 5]]
         self.down = [[6, 6, 6], [6, 6, 6], [6, 6, 6]]
         self.ways = ['F', 'R', 'f', 'r', 'U', 'B', 'u', 'b', 'D', 'L', 'l', 'd']
+        self.dictR = {
+            10: ["u", "f", "U", "F", "U", "R", "u", "r"],
+            1: ["U", "R", "u", "r", "u", "f", "U", "F"],
+            20: ["u", "r", "U", "R", "U", "B", "u", "b"],
+            2: ["U", "B", "u", "b", "u", "r", "U", "R"],
+            30: ["u", "b", "U", "B", "U", "L", "u", "l"],
+            3: ["U", "L", "u", "l", "u", "b", "U", "B"],
+            40: ["u", "l", "U", "L", "U", "F", "u", "f"],
+            4: ["U", "F", "u", "f", "u", "l", "U", "L"]
+        }  # 旋转字典 哈哈哈，旋转字典字只不过是数学上的映射函数，如果写一个映射 字典可以少些一半 2:以5号为正面旋转
+        self.lencolor = [[1, 5],
+                         [5, 4],
+                         [4, 2],
+                         [2, 1]]  # 正确时棱的颜色
 
     def resert(self):
         # 还原魔方
@@ -277,7 +291,7 @@ class magicSquare:
             self.xcross(0, i)
 
     def reDown(self):
-        # 让顶面十字回到底面
+        # 让顶面十字回到底面          （#这里可优化）
         while self.face[0][1] != self.face[1][1] or self.up[2][1] != self.down[1][1]:
             self.U()
         self.F()
@@ -353,6 +367,51 @@ class magicSquare:
         for i in range(4):
             self.fourDCorner(ls_[i], indexs_[i], i)
 
+    def Upmeidel(self):
+        # 顶面层转到中间层函数
+        index = [[1, 2, 3],
+                 [0, 2, 3],
+                 [0, 1, 3],
+                 [0, 1, 2]]
+        for i in range(4):  # 四个棱
+            self.getEdge()
+            for k, value in enumerate(self.edge):
+                if k < 4 and self.lencolor[i][0] in value and self.lencolor[i][1] in value:
+                    for j in range(3):
+                        if k == index[i][j]:
+                            t = k - i
+                            if t > 0:
+                                for _ in range(t):
+                                    self.U()
+                            elif t < 0:
+                                for _ in range(abs(t)):
+                                    self.u()
+                    if value[0] == self.lencolor[0]:
+                        self.turn(self.dictR[i+1])
+                    else:
+                        self.u()
+                        self.turn(self.dictR[(i+1)* 10])
+
+    def midelDetection(self):
+        # 中间层棱块。
+        # for i in range(4):
+        self.getEdge()
+        for k, value in enumerate(self.edge):
+            for i in range(4):
+                self.getEdge()
+
+                if k == (4 + i) and value[0] != self.lencolor[i][0] and value[1] != self.lencolor[i][1]:
+                    while not (self.up[1][1] in value):
+                        self.turn(self.dictR[i+1])
+                        self.getEdge()
+                        value = self.edge[k]
+
+    def RemeideLay(self):
+        # 我的想发是先将中间层的所有棱块不匹配的棱块 换到成顶面棱块
+        self.Upmeidel()
+        self.midelDetection()
+        self.Upmeidel()
+
     def testRotate(self):
         dict = {1: "红", 2: "蓝", 3: "黄", 4: "橙", 5: "绿", 6: "白"}
 
@@ -370,7 +429,9 @@ class magicSquare:
         self.Xcross()
         self.reDown()
         self.fullDown()
+        # self.RemeideLay()
 
+        # 下面这一段的代码可以简化
         print('\n', "-f" * 30, '\n')
         for i in range(9):
             if i % 3 == 0 and i != 0:
