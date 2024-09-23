@@ -369,42 +369,37 @@ class magicSquare:
 
     def Upmeidel(self):
         # 顶面层转到中间层函数
-        index = [[1, 2, 3],
-                 [0, 2, 3],
-                 [0, 1, 3],
-                 [0, 1, 2]]
         for i in range(4):  # 四个棱
             self.getEdge()
             for k, value in enumerate(self.edge):
                 if k < 4 and self.lencolor[i][0] in value and self.lencolor[i][1] in value:
-                    for j in range(3):
-                        if k == index[i][j]:
-                            t = k - i
-                            if t > 0:
-                                for _ in range(t):
-                                    self.U()
-                            elif t < 0:
-                                for _ in range(abs(t)):
-                                    self.u()
-                    if value[0] == self.lencolor[0]:
-                        self.turn(self.dictR[i+1])
+                    t = k - i
+                    if t > 0:
+                        for _ in range(t):
+                            self.U()
+                    elif t < 0:
+                        for _ in range(abs(t)):
+                            self.u()
+                    if value[0] == self.lencolor[i][0]:  # 操写成  if value[0] == self.lencolor[0] 傻逼！
+                        self.turn(self.dictR[i + 1])
                     else:
                         self.u()
-                        self.turn(self.dictR[(i+1)* 10])
+                        self.turn(self.dictR[(i + 1) * 10])
 
     def midelDetection(self):
         # 中间层棱块。
-        # for i in range(4):
         self.getEdge()
         for k, value in enumerate(self.edge):
             for i in range(4):
-                self.getEdge()
-
-                if k == (4 + i) and value[0] != self.lencolor[i][0] and value[1] != self.lencolor[i][1]:
-                    while not (self.up[1][1] in value):
-                        self.turn(self.dictR[i+1])
+                # print(value, self.lencolor[i][0], self.lencolor[i][1], k, 4 + i)
+                if k == (4 + i) and (
+                        (value[0] != self.lencolor[i][0]) or (value[1] != self.lencolor[i][1])):  # 我草你妈，这个or害我夜里四点到早上6点
+                    temp = value
+                    while not (self.up[1][1] in temp):
+                        self.turn(self.dictR[i + 1])
                         self.getEdge()
-                        value = self.edge[k]
+                        temp = self.edge[k]
+                        # print(temp)
 
     def RemeideLay(self):
         # 我的想发是先将中间层的所有棱块不匹配的棱块 换到成顶面棱块
@@ -414,7 +409,8 @@ class magicSquare:
 
     def testRotate(self):
         dict = {1: "红", 2: "蓝", 3: "黄", 4: "橙", 5: "绿", 6: "白"}
-
+        tp = [self.face, self.left, self.right, self.up, self.back, self.down]
+        st = ["f", "l", "r", "u", "b", "d"]
         # #单面测试是没有问题的
         # self.L()
 
@@ -425,49 +421,18 @@ class magicSquare:
 
         # 顶面十字的测试，目前没问题！
         # self.turn(self.ways)
-        self.turn(['F', 'R', 'f', 'r', 'U', "L", "B", "D"])
+        self.turn(['F', 'R', 'f', 'F', 'U', "L", "r", "B", "D", "L"])
         self.Xcross()
         self.reDown()
         self.fullDown()
-        # self.RemeideLay()
+        self.RemeideLay()
 
-        # 下面这一段的代码可以简化
-        print('\n', "-f" * 30, '\n')
-        for i in range(9):
-            if i % 3 == 0 and i != 0:
-                print("\n")
-            print(dict[self.face[i // 3][i % 3]], end=",")
-
-        print('\n', "-l" * 30, '\n')
-        for i in range(9):
-            if i % 3 == 0 and i != 0:
-                print("\n")
-            print(dict[self.left[i // 3][i % 3]], end=",")
-
-        print('\n', "-r" * 30, '\n')
-        for i in range(9):
-            if i % 3 == 0 and i != 0:
-                print("\n")
-            print(dict[self.right[i // 3][i % 3]], end=",")
-
-        print('\n', "-u" * 30, '\n')
-        for i in range(9):
-            if i % 3 == 0 and i != 0:
-                print("\n")
-            print(dict[self.up[i // 3][i % 3]], end=",")
-
-        print('\n', "-b" * 30, '\n')
-        for i in range(9):
-            if i % 3 == 0 and i != 0:
-                print("\n")
-            print(dict[self.back[i // 3][i % 3]], end=",")
-
-        print('\n', "-d" * 30, '\n')
-        for i in range(9):
-            if i % 3 == 0 and i != 0:
-                print("\n")
-            print(dict[self.down[i // 3][i % 3]], end=",")
-
+        for j in range(6):
+            print('\n', f"-{st[j]}" * 30, '\n')
+            for i in range(9):
+                if i % 3 == 0 and i != 0:
+                    print("\n")
+                print(dict[tp[j][i // 3][i % 3]], end=",")
 
 if __name__ == "__main__":
     m = magicSquare()
