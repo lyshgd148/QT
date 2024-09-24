@@ -407,6 +407,28 @@ class magicSquare:
         self.midelDetection()
         self.Upmeidel()
 
+    def Upcross(self):
+        turns= ['F', 'R', 'U', 'r', 'u', 'f']
+        if self.check_x(self.up[1][1],4):
+            return
+        for _ in range(4):
+            if self.up[1][0]== self.up[1][1] and self.up[1][2]==self.up[1][1]:#顶面一字
+                self.turn(turns)
+                return
+            if self.up[1][0]==self.up[1][1] and self.up[0][1]==self.up[1][1]:#顶面小拐弯
+                for _ in range(2):
+                    self.turn(turns)
+                return
+            self.U()
+        else:
+            for _ in range(2):
+                self.turn(turns)
+            self.U()
+            self.turn(turns)
+
+
+
+
     def testRotate(self):
         dict = {1: "红", 2: "蓝", 3: "黄", 4: "橙", 5: "绿", 6: "白"}
         tp = [self.face, self.left, self.right, self.up, self.back, self.down]
