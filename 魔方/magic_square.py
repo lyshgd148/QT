@@ -408,14 +408,14 @@ class magicSquare:
         self.Upmeidel()
 
     def Upcross(self):
-        turns= ['F', 'R', 'U', 'r', 'u', 'f']
-        if self.check_x(self.up[1][1],4):
+        turns = ['F', 'R', 'U', 'r', 'u', 'f']
+        if self.check_x(self.up[1][1], 4):
             return
         for _ in range(4):
-            if self.up[1][0]== self.up[1][1] and self.up[1][2]==self.up[1][1]:#顶面一字
+            if self.up[1][0] == self.up[1][1] and self.up[1][2] == self.up[1][1]:  # 顶面一字
                 self.turn(turns)
                 return
-            if self.up[1][0]==self.up[1][1] and self.up[0][1]==self.up[1][1]:#顶面小拐弯
+            if self.up[1][0] == self.up[1][1] and self.up[0][1] == self.up[1][1]:  # 顶面小拐弯
                 for _ in range(2):
                     self.turn(turns)
                 return
@@ -426,8 +426,107 @@ class magicSquare:
             self.U()
             self.turn(turns)
 
+    def ReUp(self):
+        # 恢复顶面
+        num = 0
+        turns = [["r", "u", "R", "u", "r", "u", "u", "R"],
+                 ["F", "U", "f", "u", "F", "U", "U", "f"]]  # 小鱼1，小鱼2
+        while True:
+            for i in range(3):
+                for j in range(3):
+                    if self.up[i][j] == self.up[1][1]:
+                        num += 1
+            if num == 9:
+                return
 
+            if num == 5:
+                for _ in range(4):
+                    if self.left[0][0] == self.up[1][1] and self.left[0][2] == self.up[1][1]:
+                        self.turn(turns[0])
+                        break
+                    self.turn(turns[0])
 
+            if num == 6:
+                for _ in range(4):
+                    if self.up[0][0] == self.up[1][1] and self.face[0][0] == self.up[1][1]:
+                        self.turn(turns[0])
+                        break
+                    elif self.up[0][0] == self.up[1][1] and self.left[0][2] == self.up[0][0]:
+                        self.turn(turns[1])
+                        break
+                    self.U()
+
+            if num == 7:
+                for _ in range(4):
+                    if self.back[0][2] == self.up[1][1]:
+                        self.turn(turns[0])
+                        break
+                    self.U()
+            num = 0
+
+    def ChangeFace(self, turns, now):
+        # 当改变正面时 F、B、U、D、L、R的对应映射
+        temp = []
+        ls = [["F", "B", "U", "D", "L", "R", "f", "b", "u", "d", "l", "r"],
+              ["R", "L", "U", "D", "F", "B", "r", "l", "u", "d", "f", "b"],
+              ["L", "F", "U", "D", "R", "L", "b", "f", "u", "d", "r", "l"],
+              ["L", "R", "U", "D", "B", "F", "l", "r", "u", "d", "b", "f"]]
+        for turn in turns:
+            id = ls[0].index(turn)
+            temp.append(ls[now][id])
+        return temp
+
+    def theLastSecond(self):
+        # 倒数第二步骤，想不出名字了，暂且凑合一下！
+        turns = ["R", "R", "F", "F", "r", "b", "R", "F", "F", "r", "B", "r"]  # L公式
+        standard = [self.face, self.right, self.back, self.left]
+        while True:
+            clr = [[self.face[0][0], self.face[0][2]],
+                   [self.right[0][0], self.right[0][2]],
+                   [self.back[0][0], self.back[0][2]],
+                   [self.left[0][0], self.left[0][2]]]  # 以红色为正面顺时针旋转
+            num = 0
+            ls = []
+            for i in range(4):  # 判断同一条边角块同色的数量
+                if clr[i][0] == clr[i][1]:
+                    num += 1
+                    ls.append(i)
+
+            temp = []
+            for j in range(len(ls)):  # 相同之后判断什么颜色
+                for i in range(4):
+                    if clr[ls[j]][0] == standard[i][1][1]:
+                        temp.append(ls[j] - i)
+                        break
+
+            if num == 4:
+                if temp[0] > 0:
+                    for _ in range(temp[0]):
+                        self.U()
+                elif temp[0] < 0:
+                    for _ in range(abs(temp[0])):
+                        self.u()
+                return
+
+            elif num == 1:
+                if temp[0] > 0:
+                    for _ in range(temp[0]):
+                        self.U()
+                elif temp[0] < 0:
+                    for _ in range(abs(temp[0])):
+                        self.u()
+                now = ls[0] - temp[0]  # 确定颜色位置
+                now = now - 1  # 确定以那个面为旋转基准面
+                if now < 0:
+                    now = 3
+                turns = self.ChangeFace(turns, now)
+                self.turn(turns)
+
+            elif num == 0:
+                self.turn(turns)
+
+    def simple(self):
+        pass
 
     def testRotate(self):
         dict = {1: "红", 2: "蓝", 3: "黄", 4: "橙", 5: "绿", 6: "白"}
@@ -441,13 +540,15 @@ class magicSquare:
         # self.getColor()
         # print(self.color)
 
-        # 顶面十字的测试，目前没问题！
+        # 底面十字的测试，目前没问题！
         # self.turn(self.ways)
-        self.turn(['F', 'R', 'f', 'F', 'U', "L", "r", "B", "D", "L"])
+        self.turn(['F', 'R', 'f', 'F', 'U', "L", "r", "B", "L", "U"])
         self.Xcross()
-        self.reDown()
-        self.fullDown()
-        self.RemeideLay()
+        self.reDown()  # 回到底面
+        self.fullDown()  # 复原底面
+        self.RemeideLay()  # 拼好中间层
+        self.Upcross()  # 拼好顶面十字
+        self.ReUp()  # 恢复顶面
 
         for j in range(6):
             print('\n', f"-{st[j]}" * 30, '\n')
@@ -455,6 +556,7 @@ class magicSquare:
                 if i % 3 == 0 and i != 0:
                     print("\n")
                 print(dict[tp[j][i // 3][i % 3]], end=",")
+
 
 if __name__ == "__main__":
     m = magicSquare()
