@@ -430,7 +430,7 @@ class magicSquare:
         # 恢复顶面
         num = 0
         turns = [["r", "u", "R", "u", "r", "u", "u", "R"],
-                 ["F", "U", "f", "u", "F", "U", "U", "f"]]  # 小鱼1，小鱼2
+                 ["F", "U", "f", "U", "F", "U", "U", "f"]]  # 小鱼1，小鱼2
         while True:
             for i in range(3):
                 for j in range(3):
@@ -444,14 +444,14 @@ class magicSquare:
                     if self.left[0][0] == self.up[1][1] and self.left[0][2] == self.up[1][1]:
                         self.turn(turns[0])
                         break
-                    self.turn(turns[0])
+                    self.U()  # self.turn(turns[0])
 
             if num == 6:
                 for _ in range(4):
                     if self.up[0][0] == self.up[1][1] and self.face[0][0] == self.up[1][1]:
                         self.turn(turns[0])
                         break
-                    elif self.up[0][0] == self.up[1][1] and self.left[0][2] == self.up[0][0]:
+                    elif self.up[0][0] == self.up[1][1] and self.left[0][2] == self.up[1][1]:
                         self.turn(turns[1])
                         break
                     self.U()
@@ -525,6 +525,42 @@ class magicSquare:
             elif num == 0:
                 self.turn(turns)
 
+    def FinalEnd(self):
+        # 最后一步了
+        turns = [["r", "u", "R", "u", "r", "u", "u", "R"],
+                 ["F", "U", "f", "U", "F", "U", "U", "f"]]  # 小鱼1，小鱼2
+        standard = [self.face, self.right, self.back, self.left]
+        local = [[0, 0], [2, 0], [2, 2], [0, 2]]
+
+        while True:
+            num = 0
+            fishLoacal = []
+            for i in range(4):
+                if standard[i][0][0] == standard[i][1][1] and standard[i][0][1] == standard[i][1][1] and standard[i][0][
+                    2] == standard[i][1][1]:
+                    num += 1
+            if num == 4:
+                return
+            if num == 0:
+                self.turn(turns[0])  # 任意来一份小鱼
+                for i in range(0, 3, 2):
+                    for j in range(0, 3, 2):
+                        if self.up[i][j] == self.up[1][1]:
+                            fishLoacal.append(i)
+                            fishLoacal.append(j)
+                for i in range(4):
+                    if local[i] == fishLoacal:
+                        if standard[i][0][0] == self.up[1][1]:
+                            turn = self.ChangeFace(turns[0], i)
+                            self.turn(turn)
+                        else:
+                            turn = self.ChangeFace(turns[1], i)
+                            self.turn(turn)
+                        break
+
+            if num == 1:
+                pass
+
     def simple(self):
         pass
 
@@ -542,13 +578,16 @@ class magicSquare:
 
         # 底面十字的测试，目前没问题！
         # self.turn(self.ways)
-        self.turn(['F', 'R', 'f', 'F', 'U', "L", "r", "B", "L", "U"])
+        self.turn(['F', 'R', 'f', 'F', "l", "F", 'U', "L", "r", "B", "f", "u"])
         self.Xcross()
         self.reDown()  # 回到底面
         self.fullDown()  # 复原底面
         self.RemeideLay()  # 拼好中间层
         self.Upcross()  # 拼好顶面十字
         self.ReUp()  # 恢复顶面
+        self.theLastSecond()  # 倒数第二步
+        # self.FinalEnd()  # 哈哈最后一步了
+        # 打印公式
 
         for j in range(6):
             print('\n', f"-{st[j]}" * 30, '\n')
