@@ -535,10 +535,13 @@ class magicSquare:
         while True:
             num = 0
             fishLoacal = []
+            temp = 0
+
             for i in range(4):
-                if standard[i][0][0] == standard[i][1][1] and standard[i][0][1] == standard[i][1][1] and standard[i][0][
-                    2] == standard[i][1][1]:
+                if standard[i][0][0] == standard[i][1][1] and standard[i][0][1] == standard[i][1][1] and standard[i][0][2] == standard[i][1][1]:
                     num += 1
+                    temp = i
+
             if num == 4:
                 return
             if num == 0:
@@ -559,7 +562,39 @@ class magicSquare:
                         break
 
             if num == 1:
-                pass
+                # 判断顺时针or逆时针
+                if temp < 2:
+                    temp1 = temp + 3
+                    temp2 = temp + 2
+                    if temp1 == 4:
+                        temp1 = 0
+                else:
+                    temp1 = temp - 1
+                    temp2 = temp - 2
+                if standard[temp2][0][1] == standard[temp1][1][1]:  # 逆时针
+                    turn = self.ChangeFace(turns[0], temp)
+                    self.turn(turn)
+                else:  # 顺时针
+                    temp=temp-1
+                    if temp<0:
+                        temp=3
+                    turn=self.ChangeFace(turns[1],temp)
+                    self.turn(turn)
+
+                for i in range(0, 3, 2):
+                    for j in range(0, 3, 2):
+                        if self.up[i][j] == self.up[1][1]:
+                            fishLoacal.append(i)
+                            fishLoacal.append(j)
+                for i in range(4):
+                    if local[i] == fishLoacal:
+                        if standard[i][0][0] == self.up[1][1]:
+                            turn = self.ChangeFace(turns[0], i)
+                            self.turn(turn)
+                        else:
+                            turn = self.ChangeFace(turns[1], i)
+                            self.turn(turn)
+                        break
 
     def simple(self):
         pass
@@ -578,7 +613,7 @@ class magicSquare:
 
         # 底面十字的测试，目前没问题！
         # self.turn(self.ways)
-        self.turn(['F', 'R', 'f', 'F', "l", "F", 'U', "L", "r", "B", "f", "u"])
+        self.turn(['F', 'R', 'f', 'F', "l", "F", 'U', "L", "B", "f", "u"])
         self.Xcross()
         self.reDown()  # 回到底面
         self.fullDown()  # 复原底面
@@ -586,7 +621,7 @@ class magicSquare:
         self.Upcross()  # 拼好顶面十字
         self.ReUp()  # 恢复顶面
         self.theLastSecond()  # 倒数第二步
-        # self.FinalEnd()  # 哈哈最后一步了
+        self.FinalEnd()  # 哈哈最后一步了
         # 打印公式
 
         for j in range(6):
