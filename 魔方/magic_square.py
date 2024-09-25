@@ -469,7 +469,7 @@ class magicSquare:
         temp = []
         ls = [["F", "B", "U", "D", "L", "R", "f", "b", "u", "d", "l", "r"],
               ["R", "L", "U", "D", "F", "B", "r", "l", "u", "d", "f", "b"],
-              ["L", "F", "U", "D", "R", "L", "b", "f", "u", "d", "r", "l"],
+              ["B", "F", "U", "D", "R", "L", "b", "f", "u", "d", "r", "l"],
               ["L", "R", "U", "D", "B", "F", "l", "r", "u", "d", "b", "f"]]
         for turn in turns:
             id = ls[0].index(turn)
@@ -484,7 +484,7 @@ class magicSquare:
             clr = [[self.face[0][0], self.face[0][2]],
                    [self.right[0][0], self.right[0][2]],
                    [self.back[0][0], self.back[0][2]],
-                   [self.left[0][0], self.left[0][2]]]  # 以红色为正面顺时针旋转
+                   [self.left[0][0], self.left[0][2]]]  # 以红色为正面逆时针旋转
             num = 0
             ls = []
             for i in range(4):  # 判断同一条边角块同色的数量
@@ -519,8 +519,8 @@ class magicSquare:
                 now = now - 1  # 确定以那个面为旋转基准面
                 if now < 0:
                     now = 3
-                turns = self.ChangeFace(turns, now)
-                self.turn(turns)
+                turn = self.ChangeFace(turns, now)
+                self.turn(turn)
 
             elif num == 0:
                 self.turn(turns)
@@ -613,7 +613,7 @@ class magicSquare:
 
         # 底面十字的测试，目前没问题！
         # self.turn(self.ways)
-        self.turn(['F', 'R', 'f', 'F', "l", "F", 'U', "L", "B", "f", "u"])
+        self.turn(['F', 'R', 'f', 'F', "l", "F", 'U', "l", "B", "f", "U"])
         self.Xcross()
         self.reDown()  # 回到底面
         self.fullDown()  # 复原底面
