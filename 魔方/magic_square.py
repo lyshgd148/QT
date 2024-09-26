@@ -25,6 +25,7 @@ class magicSquare:
                          [5, 4],
                          [4, 2],
                          [2, 1]]  # 正确时棱的颜色
+        self.method = []
 
     def resert(self):
         # 还原魔方
@@ -67,34 +68,6 @@ class magicSquare:
             [self.left[1][2], self.face[1][0]]
         ]
 
-    def check(self):
-        # 检查魔方是否还原
-        for row in self.face:
-            for colour in row:
-                if colour != 1:
-                    return False
-        for row in self.back:
-            for colour in row:
-                if colour != 4:
-                    return False
-        for row in self.left:
-            for colour in row:
-                if colour != 2:
-                    return False
-        for row in self.right:
-            for colour in row:
-                if colour != 5:
-                    return False
-        for row in self.up:
-            for colour in row:
-                if colour != 3:
-                    return False
-        for row in self.down:
-            for colour in row:
-                if colour != 6:
-                    return False
-        return True
-
     def F(self):
         temp = copy.deepcopy(self.face)
         for i in range(3):
@@ -111,6 +84,7 @@ class magicSquare:
             self.down[0][i] = temp1[2 - i][0]
         for i in range(3):
             self.left[i][2] = temp[0][i]
+        self.method.append("F")
 
     def f(self):
         # 哈哈哈，我被自己的天才想法震惊住了! 反正不是在计算资源紧张的设备上运行的，就这样多算两遍吧，懒得写了
@@ -133,6 +107,7 @@ class magicSquare:
             self.face[0][i] = temp1[0][i]
         for i in range(3):
             self.left[0][i] = temp[0][i]
+        self.method.append("U")
 
     def u(self):
         for i in range(3):
@@ -154,6 +129,7 @@ class magicSquare:
             self.back[2][i] = temp1[2][i]
         for i in range(3):
             self.left[2][i] = temp[2][i]
+        self.method.append("D")
 
     def d(self):
         for i in range(3):
@@ -175,6 +151,7 @@ class magicSquare:
             self.down[2][i] = temp1[i][0]
         for i in range(3):
             self.right[i][2] = temp[2][2 - i]
+        self.method.append("B")
 
     def b(self):
         for i in range(3):
@@ -196,6 +173,7 @@ class magicSquare:
             self.down[i][0] = temp1[i][0]
         for i in range(3):
             self.back[i][2] = temp[2 - i][0]
+        self.method.append("L")
 
     def l(self):
         for i in range(3):
@@ -217,6 +195,7 @@ class magicSquare:
             self.down[i][2] = temp1[2 - i][0]
         for i in range(3):
             self.face[i][2] = temp[i][2]
+        self.method.append("R")
 
     def r(self):
         for i in range(3):
@@ -255,6 +234,19 @@ class magicSquare:
             temp.append(turns[i].swapcase())
         self.turn(temp)
 
+    def CheakAll(self):
+        num = 0
+        self.getColor()
+        for i in range(6):
+            for j in range(3):
+                for k in range(3):
+                    if self.color[i][j][k] == self.color[i][1][1]:
+                        num += 1
+        if num == 54:
+            return True
+        else:
+            return False
+
     def check_x(self, color, standard):
         # 检查顶面目标棱块是否为目标颜色
         num = 0
@@ -275,7 +267,7 @@ class magicSquare:
         global x_sign
 
         x_sign = self.check_x(6, standard)
-        if x_sign == True or times == 4:
+        if x_sign == True or times == 5:
             return
 
         for i in self.ways:
@@ -287,11 +279,15 @@ class magicSquare:
                 self.inv_turn(i)
 
     def Xcross(self):
+        if self.CheakAll():
+            return
         for i in range(2, 5):
             self.xcross(0, i)
 
     def reDown(self):
         # 让顶面十字回到底面          （#这里可优化）
+        if self.CheakAll():
+            return
         while self.face[0][1] != self.face[1][1] or self.up[2][1] != self.down[1][1]:
             self.U()
         self.F()
@@ -342,8 +338,7 @@ class magicSquare:
                             for _ in range(abs(temp)):
                                 self.u()
                         break
-                # self.getColor()
-                # print(self.color)
+
                 while True:
                     if jiaos[num][0] == jiaos[num][1] and jiaos[num][2] == 6:
                         break
@@ -356,6 +351,8 @@ class magicSquare:
 
     def fullDown(self):
         # 将底面完全还原
+        if self.CheakAll():
+            return
         ls_ = [[1, 2, 6],
                [1, 5, 6],
                [4, 5, 6],
@@ -391,7 +388,6 @@ class magicSquare:
         self.getEdge()
         for k, value in enumerate(self.edge):
             for i in range(4):
-                # print(value, self.lencolor[i][0], self.lencolor[i][1], k, 4 + i)
                 if k == (4 + i) and (
                         (value[0] != self.lencolor[i][0]) or (value[1] != self.lencolor[i][1])):  # 我草你妈，这个or害我夜里四点到早上6点
                     temp = value
@@ -399,15 +395,18 @@ class magicSquare:
                         self.turn(self.dictR[i + 1])
                         self.getEdge()
                         temp = self.edge[k]
-                        # print(temp)
 
     def RemeideLay(self):
         # 我的想发是先将中间层的所有棱块不匹配的棱块 换到成顶面棱块
+        if self.CheakAll():
+            return
         self.Upmeidel()
         self.midelDetection()
         self.Upmeidel()
 
     def Upcross(self):
+        if self.CheakAll():
+            return
         turns = ['F', 'R', 'U', 'r', 'u', 'f']
         if self.check_x(self.up[1][1], 4):
             return
@@ -428,6 +427,8 @@ class magicSquare:
 
     def ReUp(self):
         # 恢复顶面
+        if self.CheakAll():
+            return
         num = 0
         turns = [["r", "u", "R", "u", "r", "u", "u", "R"],
                  ["F", "U", "f", "U", "F", "U", "U", "f"]]  # 小鱼1，小鱼2
@@ -478,6 +479,8 @@ class magicSquare:
 
     def theLastSecond(self):
         # 倒数第二步骤，想不出名字了，暂且凑合一下！
+        if self.CheakAll():
+            return
         turns = ["R", "R", "F", "F", "r", "b", "R", "F", "F", "r", "B", "r"]  # L公式
         standard = [self.face, self.right, self.back, self.left]
         while True:
@@ -527,6 +530,8 @@ class magicSquare:
 
     def FinalEnd(self):
         # 最后一步了
+        if self.CheakAll():
+            return
         turns = [["r", "u", "R", "u", "r", "u", "u", "R"],
                  ["F", "U", "f", "U", "F", "U", "U", "f"]]  # 小鱼1，小鱼2
         standard = [self.face, self.right, self.back, self.left]
@@ -538,7 +543,8 @@ class magicSquare:
             temp = 0
 
             for i in range(4):
-                if standard[i][0][0] == standard[i][1][1] and standard[i][0][1] == standard[i][1][1] and standard[i][0][2] == standard[i][1][1]:
+                if standard[i][0][0] == standard[i][1][1] and standard[i][0][1] == standard[i][1][1] and standard[i][0][
+                    2] == standard[i][1][1]:
                     num += 1
                     temp = i
 
@@ -575,10 +581,10 @@ class magicSquare:
                     turn = self.ChangeFace(turns[0], temp)
                     self.turn(turn)
                 else:  # 顺时针
-                    temp=temp-1
-                    if temp<0:
-                        temp=3
-                    turn=self.ChangeFace(turns[1],temp)
+                    temp = temp - 1
+                    if temp < 0:
+                        temp = 3
+                    turn = self.ChangeFace(turns[1], temp)
                     self.turn(turn)
 
                 for i in range(0, 3, 2):
@@ -597,32 +603,87 @@ class magicSquare:
                         break
 
     def simple(self):
-        pass
+        Ls = ["FFF", "BBB", "UUU", "DDD", "LLL", "RRR"]
+        Ls1 = ["fff", "bbb", "uuu", "ddd", "lll", "rrr"]
+        ls = ["f", "b", "u", "d", "l", "r"]
+        ls1 = ["F", "B", "U", "D", "L", "R"]
+        del_ = ["Ff", "fF", "Bb", "bB", "Uu", "uU", "Dd", "dD", "Ll", "lL", "Rr", "rR"]
+        temp = "".join(self.method)
+        for _ in range(10):
+            while True:
+                flag = False
+                for i in range(len(ls)):
+                    temp = temp.replace(Ls[i], ls[i])
+                for i in Ls:
+                    if i in temp:
+                        flag = True
+                if flag == False:
+                    break
+            while True:
+                flag = False
+                for i in del_:
+                    temp = temp.replace(i, "")
+                for i in del_:
+                    if i in temp:
+                        flag = True
+                if flag == False:
+                    break
+            while True:
+                flag = False
+                for i in range(len(ls)):
+                    temp = temp.replace(Ls1[i], ls1[i])
+                for i in Ls:
+                    if i in temp:
+                        flag = True
+                if flag == False:
+                    break
+            while True:
+                flag = False
+                for i in del_:
+                    temp = temp.replace(i, "")
+                for i in del_:
+                    if i in temp:
+                        flag = True
+                if flag == False:
+                    break
+
+        self.method = []
+        for i in temp:
+            self.method.append(i)
 
     def testRotate(self):
         dict = {1: "红", 2: "蓝", 3: "黄", 4: "橙", 5: "绿", 6: "白"}
         tp = [self.face, self.left, self.right, self.up, self.back, self.down]
         st = ["f", "l", "r", "u", "b", "d"]
-        # #单面测试是没有问题的
-        # self.L()
 
-        # 连续转动
-        # self.turn(['F', 'R', 'f', 'r', 'U', "L", "B","D"])  # 我c你妈，这个有一个错了就得调半天！
-        # self.getColor()
-        # print(self.color)
-
-        # 底面十字的测试，目前没问题！
-        # self.turn(self.ways)
-        self.turn(['F', 'R', 'f', 'F', "l", "F", 'U', "l", "B", "f", "U"])
+        self.turn(['F', 'R', "D"])  # 我c你妈，这个有一个错了就得调半天！
         self.Xcross()
+        print(1, end=" ")
         self.reDown()  # 回到底面
+        print(2, end=" ")
         self.fullDown()  # 复原底面
+        print(3, end=" ")
         self.RemeideLay()  # 拼好中间层
+        print(4, end=" ")
         self.Upcross()  # 拼好顶面十字
+        print(5, end=" ")
         self.ReUp()  # 恢复顶面
+        print(6, end=" ")
         self.theLastSecond()  # 倒数第二步
+        print(7, end=" ")
         self.FinalEnd()  # 哈哈最后一步了
+        print(8)
         # 打印公式
+        # self.simple()
+        print(f"Need:{len(self.method)} times!")
+        # for i in range(len(self.method)):
+        #     if i % 15 == 0 and i != 0:
+        #         print("\n")
+        #     print(self.method[i], end=" ")
+
+        self.turn(['F', "R", "D"])
+        temp = copy.deepcopy(self.method)
+        self.turn(temp)
 
         for j in range(6):
             print('\n', f"-{st[j]}" * 30, '\n')
