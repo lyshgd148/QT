@@ -673,17 +673,15 @@ class magicSquare:
         print(7, end=" ")
         self.FinalEnd()  # 哈哈最后一步了
         print(8)
-        # 打印公式
-        # self.simple()
-        print(f"Need:{len(self.method)} times!")
-        # for i in range(len(self.method)):
-        #     if i % 15 == 0 and i != 0:
-        #         print("\n")
-        #     print(self.method[i], end=" ")
 
-        self.turn(['F', "R", "D"])
-        temp = copy.deepcopy(self.method)
-        self.turn(temp)
+        # 打印公式
+        self.method = self.method[3:]
+        self.simple()
+        print(f"Need:{len(self.method)} times!")
+        for i in range(len(self.method)):
+            if i % 15 == 0 and i != 0:
+                print("\n")
+            print(self.method[i], end=" ")
 
         for j in range(6):
             print('\n', f"-{st[j]}" * 30, '\n')
