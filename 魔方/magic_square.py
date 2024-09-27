@@ -1,4 +1,5 @@
 import copy
+import cv2
 
 
 class magicSquare:
@@ -267,7 +268,7 @@ class magicSquare:
         global x_sign
 
         x_sign = self.check_x(6, standard)
-        if x_sign == True or times == 5:
+        if x_sign == True or times == 6:
             return
 
         for i in self.ways:
@@ -653,10 +654,23 @@ class magicSquare:
 
     def testRotate(self):
         dict = {1: "红", 2: "蓝", 3: "黄", 4: "橙", 5: "绿", 6: "白"}
-        tp = [self.face, self.left, self.right, self.up, self.back, self.down]
-        st = ["f", "l", "r", "u", "b", "d"]
+        tp = [self.face, self.left, self.up, self.back, self.right, self.down]
+        st = ["f", "l", "u", "b", "r", "d"]
+        conver = {"红": 1, "蓝": 2, "黄": 3, "橙": 4, "绿": 5, "白": 6}
+        # self.turn(['F',"D","l"])  # 我c你妈，这个有一个错了就得调半天！
 
-        self.turn(['F', 'R', "D"])  # 我c你妈，这个有一个错了就得调半天！
+        color = [[["白", "蓝", "蓝"], ["白", "红", "蓝"], ["橙", "橙", "黄"]],
+                 [["绿", "蓝", "红"], ["黄", "蓝", "红"], ["红", "黄", "绿"]],
+                 [["黄", "橙", "蓝"], ["红", "黄", "绿"], ["绿", "白", "白"]],
+                 [["橙", "绿", "红"], ["绿", "橙", "蓝"], ["黄", "黄", "蓝"]],
+                 [["橙", "红", "黄"], ["橙", "绿", "白"], ["橙", "绿", "蓝"]],
+                 [["白", "白", "绿"], ["橙", "白", "黄"], ["白", "红", "红"]]]
+
+        for i in range(6):
+            for j in range(3):
+                for k in range(3):
+                    tp[i][j][k] = conver[color[i][j][k]]
+
         self.Xcross()
         print(1, end=" ")
         self.reDown()  # 回到底面
@@ -675,11 +689,11 @@ class magicSquare:
         print(8)
 
         # 打印公式
-        self.method = self.method[3:]
+        # self.method = self.method[3:]
         self.simple()
         print(f"Need:{len(self.method)} times!")
         for i in range(len(self.method)):
-            if i % 15 == 0 and i != 0:
+            if i % 10 == 0 and i != 0:
                 print("\n")
             print(self.method[i], end=" ")
 
@@ -689,6 +703,12 @@ class magicSquare:
                 if i % 3 == 0 and i != 0:
                     print("\n")
                 print(dict[tp[j][i // 3][i % 3]], end=",")
+
+
+class Getdata:
+    def __init__(self):
+        self.path = ["./picture/1.jpg", "./picture/2.jpg", "./picture/3.jpg", "./picture/4.jpg", "./picture/5.jpg",
+                     "./picture/6.jpg"]
 
 
 if __name__ == "__main__":
