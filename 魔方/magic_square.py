@@ -738,15 +738,15 @@ class GetColor:
         yellow_min = np.array([10, 200, 140])
         yellow_max = np.array([50, 255, 240])
         red_min = np.array([0, 150, 90])
-        red_max = np.array([10, 255, 145])
+        red_max = np.array([10, 255, 160])
         blue_min = np.array([100, 60, 40])
-        blue_max = np.array([130, 220, 110])
+        blue_max = np.array([130, 255, 110])
         white_min = np.array([6, 7, 130])
         white_max = np.array([50, 40, 200])
         orange_min = np.array([0, 50, 170])
         orange_max = np.array([20, 255, 255])
         green_min = np.array([40, 130, 100])
-        green_max = np.array([80, 210, 180])
+        green_max = np.array([80, 255, 180])
         color = []
 
         for i in range(3):
