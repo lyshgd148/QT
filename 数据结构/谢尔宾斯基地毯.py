@@ -2,13 +2,15 @@ import turtle as t
 
 t.tracer(0)
 
-nmax, width = 3 ** 6, 729
+nmax, width = 3 ** 5, 600
 cell = width / nmax
 
 t.speed(10)
+
+
 def box(left, top, size, c):
     t.penup()
-    t.goto(left*cell - width / 2, width / 2 - top*cell)
+    t.goto(left * cell - width / 2, width / 2 - top * cell)
     t.pendown()
     t.color(c)
     t.begin_fill()
@@ -26,10 +28,10 @@ def spski(n, left, top):
             if row == 1 and col == 1:
                 box(left + n // 3, top + n // 3, n // 3, "white")
             else:
-                spski(n // 3, left+n//3*col, top+n//3*row)
+                spski(n // 3, left + n // 3 * col, top + n // 3 * row)
 
 
-box(0, 0, nmax,"red")
+box(0, 0, nmax, "red")
 spski(nmax, 0, 0)
 
 t.update()
