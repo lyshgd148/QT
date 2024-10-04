@@ -2,7 +2,7 @@ import turtle as t
 
 t.tracer(0)
 
-nmax, width = 3 ** 5, 600
+nmax, width = 3 ** 6, 729
 cell = width / nmax
 
 t.speed(10)
