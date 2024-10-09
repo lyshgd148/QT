@@ -10,7 +10,7 @@ def lorenz(w, t, p, r, b):
     return [p*(y - x), x*(r - z) - y, x*y - b*z]
 
 # 定义时间范围
-t = np.arange(0, 30, 0.02)
+t = np.arange(0, 30, 0.01)
 
 # 求解微分方程组
 track = odeint(lorenz, [0, 1, 0], t, args=(10, 28, 3))
