@@ -38,8 +38,8 @@ left = [i / 636 for i in x]
 right = [i / 474 for i in y]
 left = np.array(left)
 right = np.array(right)
-left=(left-0.5)*2*16384
-right=(right-0.5)*2*16384
+left=(left-0.5)*2*8192
+right=(right-0.5)*2*8192
 
 with wave.open("./BadApple.wav", 'w') as f:
     f.setnchannels(2)  # 设置为双声道
