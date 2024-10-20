@@ -32,23 +32,26 @@ def getvedio():
         getXY(path)
 
 
+getvedio()
+
 left = [i / 636 for i in x]
 right = [i / 474 for i in y]
 left = np.array(left)
 right = np.array(right)
+left=(left-0.5)*2*16384
+right=(right-0.5)*2*16384
+
 with wave.open("./BadApple.wav", 'w') as f:
     f.setnchannels(2)  # 设置为双声道
     f.setsampwidth(2)  # 设置采样宽度为 2 字节（16位）
     f.setframerate(44100)  # 设置采样率
-
-    # 将左右声道数据合并为双声道数据
     data = np.zeros((len(left), 2), dtype=np.int16)
-    data[:, 0] = (left * 32767).astype(np.int16)
-    data[:, 1] = (right * 32767).astype(np.int16)
+    data[:, 0] = left.astype(np.int16)
+    data[:, 1] = right.astype(np.int16)
     f.writeframes(data.tobytes())
 
 plt.figure()
-getvedio()
+
 xx = np.arange(len(x))
 print(len(x) / 44000)
 plt.plot(xx, x, "r")
