@@ -12,5 +12,12 @@ class LowPassFilter:
 
 
 class HightPassFilter:
-    def __init__(self):
+    def __init__(self, w, t):
+        self.w = w
+        self.y_0 = 0
+        self.y_last = self.y_0
+        self.T = t
+
+    def fliter(self, data):
         pass
+        return 0
