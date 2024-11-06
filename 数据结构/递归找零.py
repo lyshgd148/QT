@@ -2,7 +2,7 @@ def recDC(VlueLists, change, Results):
     minCoins = change
     if change in VlueLists:
         Results[change] = 1
-        return 1,
+        return 1
     elif Results[change] != 0:
         return Results[change]
     else:
