@@ -1,12 +1,15 @@
 import sys
+
 sys.setrecursionlimit(10000)
+
+
 def recDC(VlueLists, change, Results, Money):
     minCoins = change
     if change in VlueLists:
         Results[change] = 1
         return 1, [change]
     elif Results[change] != 0:
-        temp=Money[change][:]
+        temp = Money[change][:]
         return Results[change], temp
     else:
         minMoney = []
@@ -20,7 +23,7 @@ def recDC(VlueLists, change, Results, Money):
                 Results[change] = minCoins
                 minMoney = numMoney
         Money[change] += minMoney
-        return minCoins, minMoney #我靠这里不能返回 Money[change] 因为返回给一个变量后 其实是这个变量指向Money[change]
+        return minCoins, minMoney  # 我靠这里不能返回 Money[change] 因为返回给一个变量后 其实是这个变量指向Money[change]
 
 
 num = 7024
