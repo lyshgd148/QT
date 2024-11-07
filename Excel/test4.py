@@ -24,24 +24,25 @@ for row in range(sheet.nrows):
 
 
 def writeBlank(row, col):
-    sheet_copy.write_blank(row, col, label="")
-    sheet_copy.write_blank(row, col + 1, label="")
-    sheet_copy.write_blank(row + 1, col, label="")
-    sheet_copy.write_blank(row + 1, col + 1, label="")
-    sheet_copy.write_blank(row + 2, col, label="")
-    sheet_copy.write_blank(row + 2, col + 1, label="")
+    sheet_copy.write(row, col, label="")
+    sheet_copy.write(row, col + 1, label="")
+    sheet_copy.write(row + 1, col, label="")
+    sheet_copy.write(row + 1, col + 1, label="")
+    sheet_copy.write(row + 2, col, label="")
+    sheet_copy.write(row + 2, col + 1, label="")
 
 
+day = [num - 3 if index == 1 else num for index, num in enumerate(day)]
 index = 0
 for row in range(len(col1)):
-    for col in range(len(col1)):
-        if row != 0 and row == day[index]:
+    for col in range(2):
+        if row != 0 and index + 1 < len(day) and row == day[index + 1]:
             writeBlank(row, col)
             index += 1
             break
         elif col % 2 == 0:
-            sheet_copy.write(row + index * 2, col,col1[row-index])
+            sheet_copy.write(row + index * 2, col, col1[row - index])
         elif col % 2 == 1:
-            sheet_copy.write(row + index * 2, col,col2[row-index])
+            sheet_copy.write(row + index * 2, col, col2[row - index])
 
 workbook_copy.save('Daily English.xls')
