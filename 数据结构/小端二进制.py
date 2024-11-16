@@ -25,3 +25,4 @@ with open(os.path.join(dir, 'test.bin'), 'wb') as f:
 var = int('199', 16)
 print(var.to_bytes(2, 'little'), type(var))
 """
+
