@@ -1,6 +1,3 @@
-import math
-
-
 def encrypt(string):
     import math
     num = math.sqrt(len(string))
