@@ -20,6 +20,7 @@ def encrypt(string):
 
 
 def decrypt(string):
+    import math
     num = int(math.sqrt(len(string)))
     ls = [["" for i in range(num)] for j in range(num)]
     strings = ""
