@@ -36,4 +36,4 @@ def decrypt(string):
 
 
 string = "!HEllo  world!!!"
-print(encrypt(string),"*****",decrypt(encrypt(string)))
+print(encrypt(string), "*****", decrypt(encrypt(string)))
