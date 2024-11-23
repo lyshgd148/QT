@@ -10,9 +10,7 @@ class Application(Frame):
         self.createWidget()
 
     def createWidget(self):
-        self.btn_01 = Button(self)
-        self.btn_01["text"] = "GIVE"
-        self.btn_01["command"] = self.give
+        self.btn_01 = Button(self,text="GIVE",command=self.give)
         self.btn_01.pack()
 
         self.btn_02 = Button(self, text="quit", command=self.master.destroy)
@@ -28,3 +26,30 @@ if __name__ == "__main__":
     root.geometry("300x300+400+200")
     app = Application(root)
     root.mainloop()
+
+
+
+"""
+from tkinter import Tk, Frame, Button
+
+def give():
+    print("Give button clicked")
+
+def create_widgets(master):
+    btn_01 = Button(master, text="GIVE", command=give)
+    btn_01.pack()
+
+    btn_02 = Button(master, text="quit", command=master.destroy)
+    btn_02.pack()
+
+def main():
+    root = Tk()
+    app = Frame(root)
+    app.pack()
+    create_widgets(app)
+
+    root.mainloop()
+
+if __name__ == "__main__":
+    main()
+"""
