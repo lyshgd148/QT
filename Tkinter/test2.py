@@ -35,18 +35,18 @@ from tkinter import Tk, Frame, Button
 def give():
     print("Give button clicked")
 
-def create_widgets(master):
+def create_widgets(master,root):
     btn_01 = Button(master, text="GIVE", command=give)
     btn_01.pack()
 
-    btn_02 = Button(master, text="quit", command=master.destroy)
+    btn_02 = Button(master, text="quit", command=root.destroy)
     btn_02.pack()
 
 def main():
     root = Tk()
     app = Frame(root)
     app.pack()
-    create_widgets(app)
+    create_widgets(app,root)
 
     root.mainloop()
 
