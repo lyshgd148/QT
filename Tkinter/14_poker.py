@@ -16,7 +16,8 @@ class Application(Frame):
         for i in range(10):
             self.pokers[i].place(x=10 + i * 50, y=50)
             # self.pokers[i].bind("<Button-1>", self.discard)
-        self.pokers[0].bind_class("Label", "<Button-1>", self.discard)
+        self.pokers[0].bind_class("Label", "<Enter>", self.discard)
+        self.pokers[0].bind_class("Label", "<Leave>", self.discard)
 
     def discard(self, event):
         print(event.widget.winfo_y())
