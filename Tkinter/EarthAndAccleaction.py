@@ -8,7 +8,7 @@ class SimulationAccleaction():
         self.R = 6357
         self.G = 6.6743 * 10 ** (-11)
         self.M = 5.972 * 10 ** 24
-        self.h = 0
+        self.h = 500
         self.x = [0]
         self.y = [(self.R + self.h) * 10 ** 3]
         self.delat_t = 0.01
