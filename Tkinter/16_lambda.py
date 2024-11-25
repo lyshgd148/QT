@@ -6,6 +6,12 @@ root.geometry("530x300")
 c1 = Canvas(root, width=200, height=200, bg="green")
 c1.pack()
 
+Button(root, text="测试1", command=lambda: test(1, 2)).pack()
+
+
+def test(a, b):
+    print("a={0},b={1}".format(a, b))
+
 
 def mouseTest(event):
     print("relate to father:({0},{1})".format(event.x, event.y))
@@ -31,8 +37,8 @@ def relase_a_test(event):
 
 c1.bind("<Button-1>", mouseTest)
 c1.bind("<B1-Motion>", testDrag)
-c1.bind("<KeyPress>", keyboardTest)
-c1.bind("<KeyPress-a>", press_a_test)
-c1.bind("<KeyRelease-a>", relase_a_test)
+root.bind("<KeyPress>", keyboardTest)
+root.bind("<KeyPress-a>", press_a_test)
+root.bind("<KeyRelease-a>", relase_a_test)
 
 mainloop()
