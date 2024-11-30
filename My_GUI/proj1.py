@@ -11,14 +11,21 @@ class Application(Frame):
         self.createWidget()
 
     def createWidget(self):
-        self.canvas = Canvas(self, width=self.width, height=self.height, bg="white")
+        self.canvas = Canvas(self.master, width=self.width, height=self.height, bg="white")
         self.canvas.pack()
 
         self.rect = None
         self.scale = 0.8
         self.canvas.bind(("<MouseWheel>"), self.on_mouse_wheel)
 
-        Button(text="RestoreGraphic", command=self.restore).pack()
+        Button(self.master, text="RestoreGraphic", command=self.restore).place(relx=0.25, rely=0.81)
+
+        self.v = StringVar()
+        self.v.set("9600")
+        Label(self.master, text="波特率:", font=("Arial", 10)).place(relx=0.48, rely=0.82)
+        OptionMenu(self.master, self.v, "4800", "9600", "14400", "19200", "38400", "57600", "115200",
+                             "128000", "256000").place(relx=0.58, rely=0.81)
+
 
     def restore(self):
         self.scale = 0.8
