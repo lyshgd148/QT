@@ -74,4 +74,3 @@ if __name__ == "__main__":  # 如果__name__=="__mian__"就执行，当你在其
     root.geometry("300x300+400+200")  # 窗口大小300*300 距离电脑显示屏左边400像素 距离显示屏上边200像素
     app = Application(root)  # 调用Application类 创建实例对象
     root.mainloop()  # 不断循环 如果去掉后 画面显示一帧就消失
-
