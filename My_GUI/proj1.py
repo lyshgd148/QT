@@ -27,7 +27,7 @@ class ServerThread(threading.Thread):
                 self.client_socket.send(self.temperature_set.get().encode())
 
             try:
-                data = self.client_socket.recv(1024).decode()
+                data = self.client_socket.recv(128).decode()
                 if data[:3] == "set":
                     self.temperature_set.put(data)
                     self.MCU_set_temperature_Flag = True
@@ -66,7 +66,7 @@ class Application(Frame):
         Button(self.master, text="RestoreGraphic", command=self.restore).place(relx=0.25, rely=0.81)
 
         self.v = StringVar()
-        self.v.set("36")
+        self.v.set("36.0")
         Label(self.master, text="设定温度:", font=("Arial", 10)).place(relx=0.48, rely=0.82)
         Entry(self.master, textvariable=self.v, width=5).place(relx=0.6, rely=0.82)
         Button(self.master, text="确定", command=self.transmit).place(relx=0.7, rely=0.81)
