@@ -117,8 +117,6 @@ class Application(Frame):
 if __name__ == "__main__":
     temperature = queue.Queue()
     temperature_set = queue.Queue()
-    MCU_set_temperature_Flag = False
-    temp = ""
 
     i = 1
     x = list()
@@ -135,7 +133,7 @@ if __name__ == "__main__":
 
 
     def update_plot():
-        global i, x, y, MCU_set_temperature_Flag
+        global i, x, y
         while not temperature.empty():
             dot = temperature.get()
             dot_index = [j for j, char in enumerate(dot) if char == '.']
