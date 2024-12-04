@@ -143,8 +143,8 @@ if __name__ == "__main__":
             y.append(float(dot[:dot_index[0] + 2]))
             x.append(i)
             i += 1
-            for i in range(1, len(dot_index)):
-                y.append(float(dot[dot_index[i - 1] + 2:dot_index[i] + 2]))
+            for k in range(1, len(dot_index)):
+                y.append(float(dot[dot_index[k - 1] + 2:dot_index[k] + 2]))
                 x.append(i)
                 i += 1
 
