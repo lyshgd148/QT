@@ -10,7 +10,7 @@ for i in range(150):
     turtle.forward(3*i)
     turtle.left(90)
 
-turtle.clear()
+# turtle.clear()
 for i in range(150):
     turtle.forward(3*i)
     turtle.right(90)
