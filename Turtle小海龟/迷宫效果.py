@@ -1,11 +1,12 @@
 import turtle
 
 turtle.setup(500, 500)
-turtle.speed(5)
+# 禁用动画
+turtle.tracer(0)
 
 for i in range(150):
     turtle.forward(3*i)
     turtle.left(90)
 
-# turtle.forward(25.6)
+turtle.update()
 turtle.done()
