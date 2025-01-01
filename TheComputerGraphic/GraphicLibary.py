@@ -14,8 +14,8 @@ def Graphic_draw_Dot(x, y, size=2, color="black"):
     turtle.dot(size, color)
 
 
-# def Graphic_draw_Line(x0, y0, x1, y1, color="black") -> None:
-#     """ 中点画线算法 """
+# def Graphic_draw_MidLine(x0, y0, x1, y1, color="black") -> None:
+#     """ 我写的中点画线算法 """
 #     if x0 != x1 and y0 != y1:
 #         A = -(y1 - y0)
 #         B = (x1 - x0)
@@ -75,7 +75,8 @@ def Graphic_draw_Dot(x, y, size=2, color="black"):
 #             x0 += 1
 
 
-def Graphic_draw_Line(x0, y0, x1, y1, color="black") -> None:
+def Graphic_draw_MidLine(x0, y0, x1, y1, color="black") -> None:
+    """我靠ChatGpt写的代码效率比我的高太多了，服气"""
     """ Enhanced Midpoint Line Algorithm """
     dx = x1 - x0
     dy = y1 - y0
@@ -116,13 +117,13 @@ if __name__ == "__main__":
     Graphic_Init(500, 500)
 
     # 画线测试
-    Graphic_draw_Line(0, 0, 100, 0)
-    Graphic_draw_Line(0, 0, 0, 100)
-    Graphic_draw_Line(0, 0, 100, 100)
-    Graphic_draw_Line(0, 0, 100, -100)
-    Graphic_draw_Line(0, 0, 50, 100)
+    Graphic_draw_MidLine(0, 0, 100, 0)
+    Graphic_draw_MidLine(0, 0, 0, 100)
+    Graphic_draw_MidLine(0, 0, 100, 100)
+    Graphic_draw_MidLine(0, 0, 100, -100)
+    Graphic_draw_MidLine(0, 0, 50, 100)
 
     for j in range(1, 20):
-        for i in range(50):
-            Graphic_draw_Line(0, 0, j, i)
+        for i in range(100):
+            Graphic_draw_MidLine(0, 0, j, i)
     Graphic_finish_Draw()
