@@ -21,6 +21,7 @@ def Graphic_draw_Line(x0, y0, x1, y1, color="black") -> None:
         AA = int(2 * A)
         BB = int(2 * B)
         k = (-A) / B
+        # print(k)
         if 0 < k <= 1:
             d_old = int(AA + B)
             Graphic_draw_Dot(x0, y0, color=color)
@@ -37,7 +38,18 @@ def Graphic_draw_Line(x0, y0, x1, y1, color="black") -> None:
         elif k > 1:
             pass
         elif -1 <= k < 0:
-            pass
+            d_old = int(AA - B)
+            Graphic_draw_Dot(x0, y0, color=color)
+            while x0 < x1:
+                x0 += 1
+                if d_old <= 0:
+                    Graphic_draw_Dot(x0, y0, color=color)
+                    d_old = d_old + AA
+                elif d_old > 0:
+                    y0 -= 1
+                    Graphic_draw_Dot(x0, y0, color=color)
+                    d_old = d_old + AA - BB
+            Graphic_draw_Dot(x1, y1, color=color)
         elif k < -1:
             pass
     elif x0 == x1 and y0 != y1:
@@ -56,7 +68,11 @@ def Graphic_finish_Draw():
 
 if __name__ == "__main__":
     Graphic_Init(500, 500)
-    # Graphic_draw_Line(2, 2, 2, 90)
-    # Graphic_draw_Line(2, 2, 100, 2)
-    Graphic_draw_Line(0,0,100,90)
+
+    # 画线测试
+    Graphic_draw_Line(0, 0, 100, 0)
+    Graphic_draw_Line(0, 0, 0, 100)
+    Graphic_draw_Line(0, 0, 100, 100)
+    Graphic_draw_Line(0, 0, 100, -100)
+
     Graphic_finish_Draw()
