@@ -116,14 +116,14 @@ def Graphic_finish_Draw():
 if __name__ == "__main__":
     Graphic_Init(500, 500)
 
-    # 画线测试
+    # 中点线算法 画线测试
     Graphic_draw_MidLine(0, 0, 100, 0)
     Graphic_draw_MidLine(0, 0, 0, 100)
     Graphic_draw_MidLine(0, 0, 100, 100)
     Graphic_draw_MidLine(0, 0, 100, -100)
     Graphic_draw_MidLine(0, 0, 50, 100)
+    # for j in range(1, 20):
+    #     for i in range(100):
+    #         Graphic_draw_MidLine(0, 0, j, i)
 
-    for j in range(1, 20):
-        for i in range(100):
-            Graphic_draw_MidLine(0, 0, j, i)
     Graphic_finish_Draw()
